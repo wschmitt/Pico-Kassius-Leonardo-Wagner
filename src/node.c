@@ -28,10 +28,10 @@ Node* create_node(int nl, Node_type t, char* lex,
 	node->num_line = nl;
 	node->id = __nodes_ids__;
 	node->type = t;
-	strcpy(node->lexeme = calloc(strlen(lex)+1, sizeof(char)), lex); 
+	node->lexeme = lex;
 	node->attribute = att;
-	node->num_children = nbc;			
-	memcpy(node->children = calloc(nbc, sizeof(Node*)) , children, nbc*sizeof(Node*));
+	node->num_children = nbc;
+	node->children = children;			
 	
 	__nodes_ids__++;
 	
@@ -55,7 +55,7 @@ Node* create_leaf(int nl, Node_type t, char* lex, void* att) {
 	node->num_line = nl;
 	node->id = __nodes_ids__;
 	node->type = t;
-	strcpy(node->lexeme = calloc(strlen(lex)+1, sizeof(char)), lex); 
+	node->lexeme = lex;
 	node->attribute = att;
 	node->num_children = 0;
 	node->children = NULL;

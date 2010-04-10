@@ -11,22 +11,20 @@ int main(int argc, char *argv[])
 	 * 			b
 	 * */
 	
-	Node** children;
+	Node** children1;
+	Node** children2;
 	
 	Node* b = create_leaf(4,305, "lexeme ( b ) \n", NULL);
-	pack_nodes(&children, 0, b);
+	pack_nodes(&children1, 0, b);
 	
-	Node* t = create_node(23, 305, "lexeme ( t ) \n", NULL, 1, children);
+	Node* t = create_node(23, 305, "lexeme ( t ) \n", NULL, 1, children1);
 
-	free(children);
 	
 	Node* a = create_leaf(5, 302, "lexeme ( a ) \n", NULL);
-	pack_nodes(&children, 0, t);
-	pack_nodes(&children, 1, a);
+	pack_nodes(&children2, 0, t);
+	pack_nodes(&children2, 1, a);
 
-	Node* n = create_node(5, 302, "lexeme ( n ) : root  \n", NULL, 2, children);
-	
-	free(children);
+	Node* n = create_node(5, 302, "lexeme ( n ) : root  \n", NULL, 2, children2);
 	
 	/* imprime a altura da arvore */
 	printf ( "height: %d \n", height(a));
