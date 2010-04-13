@@ -35,8 +35,19 @@ int main(){
         append_inst_tac(&lista3, create_inst_tac("lista3", "lista3", "4", "4"));
         append_inst_tac(&lista3, create_inst_tac("lista3", "lista3", "5", "5"));
 
-        cat_tac(&lista, &lista3);
+        cat_tac(&lista2, &lista3);
         cat_tac(&lista, &lista2);
+
+		struct node_tac *lista4 = NULL;
+		struct node_tac *lista5 = NULL;
+		append_inst_tac(&lista5, create_inst_tac("lista5", "lista5", "1", "1"));
+        append_inst_tac(&lista5, create_inst_tac("lista5", "lista5", "2", "2"));
+        append_inst_tac(&lista5, create_inst_tac("lista5", "lista5", "3", "3"));
+        append_inst_tac(&lista5, create_inst_tac("lista5", "lista5", "4", "4"));
+        append_inst_tac(&lista5, create_inst_tac("lista5", "lista5", "5", "5"));
+
+		cat_tac(&lista4, &lista5);
+
 /*
         struct node_tac * t1;
         //struct node_tac * t2;
