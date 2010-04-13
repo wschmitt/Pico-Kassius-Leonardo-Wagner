@@ -94,8 +94,6 @@ int insert(symbol_t* table, entry_t* entry){
 entry_t* lookup(symbol_t table, char* name){
 	int bucket = hashpjw(name);
 	
-	//printf("%d \n", bucket);
-	
 	return entry_t_lookup(table.table[bucket], name); 
 }
 int print_table(symbol_t table){
