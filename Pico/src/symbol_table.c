@@ -1,7 +1,7 @@
 #include "symbol_table.h"
 
 /* lista
-	essa lista é uma estrutura de dados auxiliar para a tabela hash
+	essa lista ï¿½ uma estrutura de dados auxiliar para a tabela hash
  */
 entry_t* entry_t_lookup(entry_t_list* list, char* c){
 	entry_t_list* temp = list;
@@ -12,6 +12,8 @@ entry_t* entry_t_lookup(entry_t_list* list, char* c){
 		temp = temp->next;
 	}
 	
+        if (temp==NULL) return NULL;
+
 	return temp->data;
 }
 
