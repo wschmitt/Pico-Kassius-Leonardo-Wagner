@@ -75,7 +75,8 @@ false	 { return(FALSE);}
 	  }
  
 [A-Za-z_][A-Za-z0-9_]*  { 
-				printf("%s\n",yytext);
+				/* printf("%s\n",yytext); */
+				strcpy( yylval.cadeia = calloc(strlen(yytext)+1 , sizeof(char*)) , yytext);
 				return IDF;
 			}
 
