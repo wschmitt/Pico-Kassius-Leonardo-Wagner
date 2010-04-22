@@ -92,7 +92,7 @@ acoes: comando ';'
     | comando ';' acoes
     ;
 
-comando: lvalue '=' expr
+comando: lvalue '=' expr { printf("%s \n", $3); }
        | enunciado
        ;
 
