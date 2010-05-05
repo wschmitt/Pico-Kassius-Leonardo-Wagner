@@ -1,0 +1,3 @@
+x, y, k1, kvp2, kassius3, kassiusvargasprestes4: int;
+z: double;
+x = ((12+3)*4)-5;

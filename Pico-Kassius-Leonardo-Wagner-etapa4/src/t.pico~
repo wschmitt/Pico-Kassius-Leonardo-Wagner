@@ -1,0 +1,5 @@
+x,y, var1 : int;
+wagner, kassius, leo : char;
+verme : double;
+x = 25;
+
