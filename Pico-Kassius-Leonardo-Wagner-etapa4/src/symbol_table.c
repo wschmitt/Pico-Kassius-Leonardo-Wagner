@@ -12,7 +12,9 @@ entry_t* entry_t_lookup(entry_t_list* list, char* c){
 			break;
 		temp = temp->next;
 	}
-	
+	if (temp == NULL)
+		return NULL;
+
 	return temp->data;
 }
 
@@ -106,12 +108,12 @@ int print_table(symbol_t table){
 			temp = table.table[i];
 			while( temp != NULL){
 				total_items++;
-				printf("nome: %s , tipo: %d ", temp->data->name, temp->data->type);
+				printf("nome: %s , tipo: %d , size: %d , desloc: %d \n", temp->data->name, temp->data->type, temp->data->size, temp->data->desloc);
 				temp = temp->next;
    			}
-			printf("\n");
+			/*printf("\n");*/
 		}
-	printf("total : %d", total_items);
+	printf("total : %d \n", total_items);
 	return total_items;
 }
 

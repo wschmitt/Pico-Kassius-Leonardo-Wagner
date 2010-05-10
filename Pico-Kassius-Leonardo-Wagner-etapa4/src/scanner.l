@@ -26,7 +26,7 @@ digito     [0-9]
 
 int    	 { return(INT); }
 double   { return(DOUBLE);}
-real     { return(FLOAT);}
+float    { return(FLOAT);}
 char     { return(CHAR);}
 "*"      { return('*');}
 "+"	 { return('+');}

@@ -1,3 +1,5 @@
 x, y, k1, kvp2, kassius3, kassiusvargasprestes4: int;
 z: double;
+c: char;
+f: float;
 x = ((12+3)*4)-5;

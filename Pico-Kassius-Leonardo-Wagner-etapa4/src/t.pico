@@ -1,5 +1,16 @@
-x,y, var1 : int;
-wagner, kassius, leo : char;
-verme : double;
-x = 25;
+x, y : int;
+z: double;
+array : int[0:10];
+array2 : double[1:41, 3:4];
+array3: float[1:2, 1:100, 1:1000];
+k : char;
 
+while (x > y){
+y = 5;
+x = 9 + 4 + y/2;
+x = x + y;
+if (x>=7) then 4+9;
+	else 8+array2[5, 4, 7, 90];
+	end;
+z = k+ 1;
+};

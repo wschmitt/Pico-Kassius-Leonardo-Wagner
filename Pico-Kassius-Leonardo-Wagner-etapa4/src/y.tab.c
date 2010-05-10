@@ -138,6 +138,15 @@
   #include <stdlib.h>
   #include "node.h"
   #include "symbol_table.h"
+
+  #define UNDEFINED_SYMBOL_ERROR -21
+
+   typedef struct 
+   {
+	int c;
+	int lim_inf;
+	int lim_sup;
+   } t_array;
   
   /* macro pra concatenar as partes em str*/
   #define CAT(str,B,C,D) strcat(strcat(strcpy(str, B), C), D)
@@ -148,14 +157,12 @@
 
   /*tabela de símbolos*/
   symbol_t* s_table;
-  long desloc;
+  long desloc = 0;
 
   /* cabeçalho de algumas funções auxiliares */
   int size_of_type(int type);
   void insert_list_of_vars(Node* n, int var_type);
-
- 
-
+  void insert_list_of_arrays(Node* n, int var_type, t_array* a);
 
 
 
@@ -179,13 +186,13 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 31 "pico.y"
+#line 38 "pico.y"
 {
   char* cadeia;
   struct _node* no;
 }
 /* Line 187 of yacc.c.  */
-#line 189 "y.tab.c"
+#line 196 "y.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -198,7 +205,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 202 "y.tab.c"
+#line 209 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -506,12 +513,12 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    94,    94,   105,   108,   109,   118,   148,   150,   160,
+       0,   101,   101,   111,   114,   115,   124,   148,   150,   160,
      161,   164,   166,   168,   170,   174,   183,   192,   201,   212,
-     221,   234,   235,   246,   256,   259,   261,   272,   273,   284,
-     293,   302,   311,   320,   321,   323,   325,   326,   329,   339,
-     340,   354,   366,   368,   380,   382,   384,   385,   396,   407,
-     416,   427,   438,   449,   460,   471
+     221,   234,   235,   246,   256,   259,   267,   283,   284,   295,
+     304,   313,   322,   331,   332,   334,   336,   337,   340,   350,
+     351,   365,   377,   379,   391,   393,   395,   396,   405,   414,
+     423,   432,   441,   450,   459,   468
 };
 #endif
 
@@ -1494,72 +1501,64 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 94 "pico.y"
+#line 101 "pico.y"
     {Node** children; 
 			 Node* pf1 = (yyvsp[(1) - (2)]. no );
  			 Node* pf3 = (yyvsp[(2) - (2)]. no ); 
 			 pack_nodes(&children, 0, pf1);
 			 pack_nodes(&children, 1, pf3);
 		syntax_tree = create_node(lineno, program_node, "raiz", NULL, 2, children);
-		printf("raiz %d \n", lineno);
-		printf("------------------- verificando tablea de simbolos ----------------------\n");
+		/*printf("raiz %d \n", lineno);*/
+		printf("------------------- verificando tabela de simbolos ----------------------\n");
 		print_table(*s_table);
-
 		}
     break;
 
   case 3:
-#line 105 "pico.y"
+#line 111 "pico.y"
     {(yyval. no ) = (yyvsp[(1) - (1)]. no );}
     break;
 
   case 4:
-#line 108 "pico.y"
+#line 114 "pico.y"
     {(yyval. no ) = (yyvsp[(1) - (2)]. no );}
     break;
 
   case 5:
-#line 109 "pico.y"
+#line 115 "pico.y"
     {Node** children; 
 			 		 Node* pf1 = (yyvsp[(1) - (3)]. no );
  			 		 Node* pf3 = (yyvsp[(2) - (3)]. no ); 
 			 		 pack_nodes(&children, 0, pf1);
 			 		 pack_nodes(&children, 1, pf3);
 		(yyval. no ) = create_node(lineno, decl_node, "declaracoes", NULL, 2, children);
-		printf("declaracoes %d \n", lineno);}
+		/*printf("declaracoes %d \n", lineno);*/}
     break;
 
   case 6:
-#line 118 "pico.y"
+#line 124 "pico.y"
     {	Node** children; 
 			 		Node* pf1 = (yyvsp[(1) - (3)]. no );
  			 		Node* pf3 = (yyvsp[(3) - (3)]. no ); 
 			 		pack_nodes(&children, 0, pf1);
 			 		pack_nodes(&children, 1, pf3);
 
-					//if ($3->type == int_node)
-					//	printf("teste: var = %s  do tipo  %s \n", $1->lexeme, "int");
-					//printf("numero filhos: %d \n", nb_of_children($1));
-					//printf("var: %s \n",child(child($1,2),2)->lexeme);
-
-					/* insere as variaveis na lista de simbolos */
-					insert_list_of_vars((yyvsp[(1) - (3)]. no ), (yyvsp[(3) - (3)]. no )->type);					
-					//int i;
-					//for (i=1; i <= nb_of_children($1); i++){
-					//	Node* temp = child($1
-					//}
-
-		//int i;
-		//for ( i = 1; i <= nb_of_children($1); i++){
-		//	Node* temp = $1;
-			//int k = 1;			
-			//while (temp!=NULL){
-		//		temp = child(temp, i);
-			//}			
-		//	printf("filhos: %s \n", temp->lexeme);
-		//}
-		(yyval. no ) = create_node(lineno, decl_node, "declaracao", NULL, 2, children);
-		printf("declaracao %d \n", lineno);}
+					/* verifica se eh uma array */
+					if (nb_of_children((yyvsp[(3) - (3)]. no ))==0)	
+						/* insere as variaveis na lista de simbolos */		
+						insert_list_of_vars((yyvsp[(1) - (3)]. no ), (yyvsp[(3) - (3)]. no )->type);  
+					else{
+						/* arrays */
+						t_array* a = malloc(sizeof(t_array));
+						a->c = 0; /* n sei */						
+						a->lim_inf = atoi(child(child((yyvsp[(3) - (3)]. no ),2),1)->lexeme);
+						a->lim_sup = atoi(child(child((yyvsp[(3) - (3)]. no ),2),2)->lexeme);
+						insert_list_of_arrays((yyvsp[(1) - (3)]. no ),child((yyvsp[(3) - (3)]. no ),1)->type,a);
+						/*printf("nodo da array: %s \n", child(child($3,2),1)->lexeme);*/
+					}					
+		
+					(yyval. no ) = create_node(lineno, decl_node, "declaracao", NULL, 2, children);
+					/*printf("declaracao %d \n", lineno);*/}
     break;
 
   case 7:
@@ -1576,7 +1575,7 @@ yyreduce:
 					  pack_nodes(&children, 0, pf1);
 					  pack_nodes(&children, 1, pf3);
 					  (yyval. no ) = create_node(lineno, decl_list_node, "lista", NULL, 2, children);
-					  printf("lista declaracao %s , %s, %d \n", (yyvsp[(1) - (3)]. cadeia ), (yyvsp[(3) - (3)]. no )->lexeme,lineno);
+					  /*printf("lista declaracao %s , %s, %d \n", $1, $3->lexeme,lineno);*/
 					}
     break;
 
@@ -1622,19 +1621,19 @@ yyreduce:
 		  pack_nodes(&children, 0, pf1);
 		  pack_nodes(&children, 1, pf3);
 		  (yyval. no ) = create_node(lineno, decl_list_node, "tipolista", NULL, 2, children);
-		  printf("tipolista %s , %s, %d \n", (yyvsp[(1) - (4)]. cadeia ), (yyvsp[(3) - (4)]. no )->lexeme, lineno);
+		  /*printf("tipolista %s , %s, %d \n", $1, $3->lexeme, lineno);*/
 		}
     break;
 
   case 16:
 #line 184 "pico.y"
     { Node** children;
-		  Node* pf1 = create_leaf(lineno, float_node, (yyvsp[(1) - (4)]. cadeia ), NULL); 
+		  Node* pf1 = create_leaf(lineno, double_node, (yyvsp[(1) - (4)]. cadeia ), NULL); 
 		  Node* pf3 = (yyvsp[(3) - (4)]. no ); 
 		  pack_nodes(&children, 0, pf1);
 		  pack_nodes(&children, 1, pf3);
 		  (yyval. no ) = create_node(lineno, decl_list_node, "tipolista", NULL, 2, children);
-		  printf("tipolista %s , %s, %d \n", (yyvsp[(1) - (4)]. cadeia ), (yyvsp[(3) - (4)]. no )->lexeme, lineno);
+		  /*printf("tipolista %s , %s, %d \n", $1, $3->lexeme, lineno);*/
 		}
     break;
 
@@ -1646,7 +1645,7 @@ yyreduce:
 		  pack_nodes(&children, 0, pf1);
 		  pack_nodes(&children, 1, pf3);
 		  (yyval. no ) = create_node(lineno, decl_list_node, "tipolista", NULL, 2, children);
-		  printf("tipolista %s , %s, %d \n", (yyvsp[(1) - (4)]. cadeia ), (yyvsp[(3) - (4)]. no )->lexeme, lineno);
+		  /*printf("tipolista %s , %s, %d \n", $1, $3->lexeme, lineno);*/
 		}
     break;
 
@@ -1658,7 +1657,7 @@ yyreduce:
 		  pack_nodes(&children, 0, pf1);
 		  pack_nodes(&children, 1, pf3);
 		  (yyval. no ) = create_node(lineno, decl_list_node, "tipolista", NULL, 2, children);
-		  printf("tipolista %s , %s, %d \n", (yyvsp[(1) - (4)]. cadeia ), (yyvsp[(3) - (4)]. no )->lexeme, lineno);
+		  /*printf("tipolista %s , %s, %d \n", $1, $3->lexeme, lineno);*/
 		}
     break;
 
@@ -1670,7 +1669,7 @@ yyreduce:
 		  pack_nodes(&children, 0, pf1);
 		  pack_nodes(&children, 1, pf3);
 		  (yyval. no ) = create_node(lineno, decl_list_node, "listadupla", NULL, 2, children);
-		  printf("listadupla %s , %s, %d \n", (yyvsp[(1) - (3)]. cadeia ), (yyvsp[(3) - (3)]. cadeia ), lineno);
+		  /*printf("listadupla %s , %s, %d \n", $1, $3, lineno);*/
 		}
     break;
 
@@ -1684,7 +1683,7 @@ yyreduce:
 		  pack_nodes(&children, 1, pf2);
 		  pack_nodes(&children, 2, pf3);
 		  (yyval. no ) = create_node(lineno, decl_list_node, "listadupla", NULL, 3, children);
-		  printf("listadupla %s , %s, %s, %d \n", (yyvsp[(1) - (5)]. cadeia ), (yyvsp[(3) - (5)]. cadeia ), (yyvsp[(5) - (5)]. no )->lexeme, lineno);
+		  /*printf("listadupla %s , %s, %s, %d \n", $1, $3, $5->lexeme, lineno);*/
 		}
     break;
 
@@ -1701,7 +1700,7 @@ yyreduce:
 		  pack_nodes(&children, 0, pf1);
 		  pack_nodes(&children, 1, pf3);
 		  (yyval. no ) = create_node(lineno, decl_list_node, "acoes", NULL, 2, children);
-		  printf("acoes %s , %s, %d \n", (yyvsp[(1) - (3)]. no )->lexeme, (yyvsp[(3) - (3)]. no )->lexeme, lineno);
+		  /*printf("acoes %s , %s, %d \n", $1->lexeme, $3->lexeme, lineno);*/
 		}
     break;
 
@@ -1714,7 +1713,7 @@ yyreduce:
 		  pack_nodes(&children, 0, pf1);
 		  pack_nodes(&children, 1, pf3);
 		  (yyval. no ) = create_node(lineno, decl_list_node, "comando", NULL, 2, children);
-		  printf("acoes %s , %s, %d \n", (yyvsp[(1) - (3)]. no )->lexeme, (yyvsp[(3) - (3)]. no )->lexeme, lineno);
+		  /*printf("acoes %s , %s, %d \n", $1->lexeme, $3->lexeme, lineno);*/
 		}
     break;
 
@@ -1726,40 +1725,51 @@ yyreduce:
   case 25:
 #line 259 "pico.y"
     { 	Node* n = create_leaf(lineno, idf_node, (yyvsp[(1) - (1)]. cadeia ), NULL); 
-		(yyval. no ) = n; }
+		(yyval. no ) = n;
+		/* erro de variavel nao declarada */
+		if (lookup(*s_table,n->lexeme)==NULL){	
+			printf("UNDEFINED SYMBOL. A variavel %s nao foi declarada.\n", n->lexeme);
+			return (UNDEFINED_SYMBOL_ERROR);
+		}		
+	    }
     break;
 
   case 26:
-#line 262 "pico.y"
+#line 268 "pico.y"
     { Node** children;
 		  Node* pf1 = create_leaf(lineno, idf_node, (yyvsp[(1) - (4)]. cadeia ), NULL); 
 		  Node* pf3 = (yyvsp[(3) - (4)]. no );
 		  pack_nodes(&children, 0, pf1);
 		  pack_nodes(&children, 1, pf3);
-		  (yyval. no ) = create_node(lineno, idf_node, "lvalue", NULL, 2, children);
-		  printf("lvalue %s , %s, %d \n", (yyvsp[(1) - (4)]. cadeia ), (yyvsp[(3) - (4)]. no )->lexeme, lineno);
+		  (yyval. no ) = create_node(lineno, idf_node, (yyvsp[(1) - (4)]. cadeia ), NULL, 2, children);
+		  /* erro de variavel não declarada */
+		  if (lookup(*s_table,pf1->lexeme)==NULL){	
+			printf("UNDEFINED SYMBOL. A variavel %s nao foi declarada.\n", pf1->lexeme);
+			return (UNDEFINED_SYMBOL_ERROR);
+		  }		
+		  /*printf("lvalue %s , %s, %d \n", $1, $3->lexeme, lineno);*/
 		}
     break;
 
   case 27:
-#line 272 "pico.y"
+#line 283 "pico.y"
     { (yyval. no ) = (yyvsp[(1) - (1)]. no ); }
     break;
 
   case 28:
-#line 274 "pico.y"
+#line 285 "pico.y"
     { Node** children;
 		  Node* pf1 = (yyvsp[(1) - (3)]. no ); 
 		  Node* pf3 = (yyvsp[(3) - (3)]. no );
 		  pack_nodes(&children, 0, pf1);
 		  pack_nodes(&children, 1, pf3);
 		  (yyval. no ) = create_node(lineno, op_node, "listaexpr", NULL, 2, children);
-		  printf("listaexpr %s , %s, %d \n", (yyvsp[(1) - (3)]. no )->lexeme, (yyvsp[(3) - (3)]. no )->lexeme, lineno);
+		  /*printf("listaexpr %s , %s, %d \n", $1->lexeme, $3->lexeme, lineno);*/
 		}
     break;
 
   case 29:
-#line 284 "pico.y"
+#line 295 "pico.y"
     {  char* str = calloc(strlen((yyvsp[(1) - (3)]. no )->lexeme)+strlen((yyvsp[(3) - (3)]. no )->lexeme)+2, sizeof(char*));
 			CAT(str,(yyvsp[(1) - (3)]. no )->lexeme,(yyvsp[(3) - (3)]. no )->lexeme,"+");
 			Node** children; 
@@ -1767,12 +1777,12 @@ yyreduce:
  			Node* pf3 = (yyvsp[(3) - (3)]. no ); 
 			pack_nodes(&children, 0, pf1);
 			pack_nodes(&children, 1, pf3);
-			(yyval. no ) = create_node(lineno, 305, str, NULL, 2, children);
-			printf("node: %s\n", str);}
+			(yyval. no ) = create_node(lineno, op_node, str, NULL, 2, children);
+			/*printf("node: %s\n", str);*/}
     break;
 
   case 30:
-#line 293 "pico.y"
+#line 304 "pico.y"
     { 	char* str = calloc(strlen((yyvsp[(1) - (3)]. no )->lexeme)+strlen((yyvsp[(3) - (3)]. no )->lexeme)+2, sizeof(char*)); 
 			CAT(str,(yyvsp[(1) - (3)]. no )->lexeme,(yyvsp[(3) - (3)]. no )->lexeme,"-");
 			Node** children; 
@@ -1780,12 +1790,12 @@ yyreduce:
  			Node* pf3 = (yyvsp[(3) - (3)]. no ); 
 			pack_nodes(&children, 0, pf1);
 			pack_nodes(&children, 1, pf3);
-			(yyval. no ) = create_node(lineno, 305, str, NULL, 2, children);
-			printf("node: %s\n", str);}
+			(yyval. no ) = create_node(lineno, op_node, str, NULL, 2, children);
+			/*printf("node: %s\n", str);*/}
     break;
 
   case 31:
-#line 302 "pico.y"
+#line 313 "pico.y"
     { 	char* str = calloc(strlen((yyvsp[(1) - (3)]. no )->lexeme)+strlen((yyvsp[(3) - (3)]. no )->lexeme)+2, sizeof(char*)); 
 			CAT(str,(yyvsp[(1) - (3)]. no )->lexeme,(yyvsp[(3) - (3)]. no )->lexeme,"*");
 			Node** children; 
@@ -1794,11 +1804,11 @@ yyreduce:
 			pack_nodes(&children, 0, pf1);
 			pack_nodes(&children, 1, pf3);
 			(yyval. no ) = create_node(lineno, op_node, str, NULL, 2, children);
-			printf("node: %s\n", str);}
+			/*printf("node: %s\n", str);*/}
     break;
 
   case 32:
-#line 311 "pico.y"
+#line 322 "pico.y"
     { 	char* str = calloc(strlen((yyvsp[(1) - (3)]. no )->lexeme)+strlen((yyvsp[(3) - (3)]. no )->lexeme)+2, sizeof(char*)); 
 			CAT(str,(yyvsp[(1) - (3)]. no )->lexeme,(yyvsp[(3) - (3)]. no )->lexeme,"/");
 			Node** children; 
@@ -1807,54 +1817,54 @@ yyreduce:
 			pack_nodes(&children, 0, pf1);
 			pack_nodes(&children, 1, pf3);
 			(yyval. no ) = create_node(lineno, op_node, str, NULL, 2, children); 
-			printf("node: %s\n", str);}
+			/*printf("node: %s\n", str);*/}
     break;
 
   case 33:
-#line 320 "pico.y"
+#line 331 "pico.y"
     { 	(yyval. no ) = (yyvsp[(2) - (3)]. no ); }
     break;
 
   case 34:
-#line 321 "pico.y"
+#line 332 "pico.y"
     { 	Node* n = create_leaf(lineno, int_node, (yyvsp[(1) - (1)]. cadeia ), NULL); 
 		       	(yyval. no ) = n;}
     break;
 
   case 35:
-#line 323 "pico.y"
+#line 334 "pico.y"
     { 	Node* n = create_leaf(lineno, float_node, (yyvsp[(1) - (1)]. cadeia ), NULL); 
 		       	(yyval. no ) = n;}
     break;
 
   case 36:
-#line 325 "pico.y"
+#line 336 "pico.y"
     {  (yyval. no ) = (yyvsp[(1) - (1)]. no );}
     break;
 
   case 37:
-#line 326 "pico.y"
+#line 337 "pico.y"
     {	(yyval. no ) = (yyvsp[(1) - (1)]. no );}
     break;
 
   case 38:
-#line 330 "pico.y"
+#line 341 "pico.y"
     {Node** children; 
 		 Node* pf1 = create_leaf(lineno, idf_node, (yyvsp[(1) - (4)]. cadeia ), NULL);
  		 Node* pf3 = (yyvsp[(3) - (4)]. no ); 
 		 pack_nodes(&children, 0, pf1);
 		 pack_nodes(&children, 1, pf3);
 		 (yyval. no ) = create_node(lineno, proc_node, "chamaproc", NULL, 2, children); 
-		 printf("chamaproc %s, %s \n", (yyvsp[(1) - (4)]. cadeia ), (yyvsp[(3) - (4)]. no )->lexeme);}
+		 /*printf("chamaproc %s, %s \n", $1, $3->lexeme);*/}
     break;
 
   case 39:
-#line 339 "pico.y"
+#line 350 "pico.y"
     { (yyval. no ) = (yyvsp[(1) - (1)]. no ); printf("%s \n",(yyvsp[(1) - (1)]. no )->lexeme);}
     break;
 
   case 40:
-#line 341 "pico.y"
+#line 352 "pico.y"
     {Node** children; 
 		 Node* pf1 = create_leaf(lineno, if_node, (yyvsp[(1) - (7)]. cadeia ), NULL);
  		 Node* pf2 = (yyvsp[(3) - (7)]. no );
@@ -1867,11 +1877,11 @@ yyreduce:
 		 pack_nodes(&children, 3, pf4);
 		 pack_nodes(&children, 4, pf5);
 		 (yyval. no ) = create_node(lineno, cond_node, "enunciado", NULL, 5, children); 
-		 printf("enunciado %s, %s \n", (yyvsp[(1) - (7)]. cadeia ), (yyvsp[(5) - (7)]. cadeia ));}
+		 /*printf("enunciado %s, %s \n", $1, $5);*/}
     break;
 
   case 41:
-#line 355 "pico.y"
+#line 366 "pico.y"
     {Node** children; 
 		 Node* pf1 = create_leaf(lineno, while_node, (yyvsp[(1) - (7)]. cadeia ), NULL);
  		 Node* pf2 = (yyvsp[(3) - (7)]. no );
@@ -1880,17 +1890,17 @@ yyreduce:
 		 pack_nodes(&children, 1, pf2);
 		 pack_nodes(&children, 2, pf3);
 		 (yyval. no ) = create_node(lineno, cond_node, "enunciado", NULL, 3, children); 
-		 printf("enunciado %s, %s \n", (yyvsp[(3) - (7)]. no )->lexeme, (yyvsp[(6) - (7)]. no )->lexeme);}
+		 /*printf("enunciado %s, %s \n", $3->lexeme, $6->lexeme);*/}
     break;
 
   case 42:
-#line 366 "pico.y"
+#line 377 "pico.y"
     { 	Node* n = create_leaf(lineno, if_node, (yyvsp[(1) - (1)]. cadeia ), NULL); 
 		       	(yyval. no ) = n;}
     break;
 
   case 43:
-#line 369 "pico.y"
+#line 380 "pico.y"
     {Node** children; 
 		 Node* pf1 = create_leaf(lineno, if_node, (yyvsp[(1) - (3)]. cadeia ), NULL);
  		 Node* pf2 = (yyvsp[(2) - (3)]. no );
@@ -1899,153 +1909,137 @@ yyreduce:
 		 pack_nodes(&children, 1, pf2);
 		 pack_nodes(&children, 2, pf3);
 		 (yyval. no ) = create_node(lineno, proc_node, "fiminstcontrole", NULL, 3, children); 
-		 printf("fiminstcontrole %s, %s \n", (yyvsp[(1) - (3)]. cadeia ), (yyvsp[(3) - (3)]. cadeia ));}
+		 /*printf("fiminstcontrole %s, %s \n", $1, $3);*/}
     break;
 
   case 44:
-#line 380 "pico.y"
+#line 391 "pico.y"
     { 	Node* n = create_leaf(lineno, true_node, (yyvsp[(1) - (1)]. cadeia ), NULL); 
 		       	(yyval. no ) = n;}
     break;
 
   case 45:
-#line 382 "pico.y"
+#line 393 "pico.y"
     { 	Node* n = create_leaf(lineno, false_node, (yyvsp[(1) - (1)]. cadeia ), NULL); 
 		       	(yyval. no ) = n;}
     break;
 
   case 46:
-#line 384 "pico.y"
+#line 395 "pico.y"
     { (yyval. no ) = (yyvsp[(2) - (3)]. no );}
     break;
 
   case 47:
-#line 386 "pico.y"
+#line 397 "pico.y"
     { Node** children;
 		  Node* pf1 = (yyvsp[(1) - (3)]. no ); 
-		  Node* pf2 = create_leaf(lineno, and_node, (yyvsp[(2) - (3)]. cadeia ), NULL);
 		  Node* pf3 = (yyvsp[(3) - (3)]. no );
 		  pack_nodes(&children, 0, pf1);
-		  pack_nodes(&children, 1, pf2);
-		  pack_nodes(&children, 2, pf3);
-		  (yyval. no ) = create_node(lineno, cond_node, "expbool", NULL, 3, children);
-		  printf("expbool %s , %s, %d \n", (yyvsp[(1) - (3)]. no )->lexeme, (yyvsp[(3) - (3)]. no )->lexeme, lineno);
+		  pack_nodes(&children, 1, pf3);
+		  (yyval. no ) = create_node(lineno, cond_node, "expbool", NULL, 2, children);
+		  /*printf("expbool %s , %s, %d \n", $1->lexeme, $3->lexeme, lineno);*/
 		}
     break;
 
   case 48:
-#line 397 "pico.y"
+#line 406 "pico.y"
     { Node** children;
 		  Node* pf1 = (yyvsp[(1) - (3)]. no ); 
-		  Node* pf2 = create_leaf(lineno, or_node, (yyvsp[(2) - (3)]. cadeia ), NULL);
 		  Node* pf3 = (yyvsp[(3) - (3)]. no );
 		  pack_nodes(&children, 0, pf1);
-		  pack_nodes(&children, 1, pf2);
-		  pack_nodes(&children, 2, pf3);
-		  (yyval. no ) = create_node(lineno, cond_node, "expbool", NULL, 3, children);
-		  printf("expbool %s , %s, %d \n", (yyvsp[(1) - (3)]. no )->lexeme, (yyvsp[(3) - (3)]. no )->lexeme, lineno);
+		  pack_nodes(&children, 1, pf3);
+		  (yyval. no ) = create_node(lineno, cond_node, "expbool", NULL, 2, children);
+		  /*printf("expbool %s , %s, %d \n", $1->lexeme, $3->lexeme, lineno);*/
 		}
     break;
 
   case 49:
-#line 408 "pico.y"
+#line 415 "pico.y"
     { Node** children; 
 		  Node* pf1 = create_leaf(lineno, not_node, (yyvsp[(1) - (2)]. cadeia ), NULL);
 		  Node* pf2 = (yyvsp[(2) - (2)]. no );
 		  pack_nodes(&children, 0, pf1);
 		  pack_nodes(&children, 1, pf2);
 		  (yyval. no ) = create_node(lineno, cond_node, "expbool", NULL, 2, children);
-		  printf("expbool %s , %s, %d \n", (yyvsp[(1) - (2)]. cadeia ), (yyvsp[(2) - (2)]. no )->lexeme, lineno);
+		  /*printf("expbool %s , %s, %d \n", $1, $2->lexeme, lineno);*/
 		}
     break;
 
   case 50:
-#line 417 "pico.y"
+#line 424 "pico.y"
     { Node** children;
 		  Node* pf1 = (yyvsp[(1) - (3)]. no ); 
-		  Node* pf2 = create_leaf(lineno, sup_node, ">", NULL);
 		  Node* pf3 = (yyvsp[(3) - (3)]. no );
 		  pack_nodes(&children, 0, pf1);
-		  pack_nodes(&children, 1, pf2);
-		  pack_nodes(&children, 2, pf3);
-		  (yyval. no ) = create_node(lineno, cond_node, "expbool", NULL, 3, children);
-		  printf("expbool %s , %s, %d \n", (yyvsp[(1) - (3)]. no )->lexeme, (yyvsp[(3) - (3)]. no )->lexeme, lineno);
+		  pack_nodes(&children, 1, pf3);
+		  (yyval. no ) = create_node(lineno, cond_node, "expbool", NULL, 2, children);
+		  /*printf("expbool %s , %s, %d \n", $1->lexeme, $3->lexeme, lineno);*/
 		}
     break;
 
   case 51:
-#line 428 "pico.y"
+#line 433 "pico.y"
     { Node** children;
 		  Node* pf1 = (yyvsp[(1) - (3)]. no ); 
-		  Node* pf2 = create_leaf(lineno, inf_node, "<", NULL);
 		  Node* pf3 = (yyvsp[(3) - (3)]. no );
 		  pack_nodes(&children, 0, pf1);
-		  pack_nodes(&children, 1, pf2);
-		  pack_nodes(&children, 2, pf3);
-		  (yyval. no ) = create_node(lineno, cond_node, "expbool", NULL, 3, children);
-		  printf("expbool %s , %s, %d \n", (yyvsp[(1) - (3)]. no )->lexeme, (yyvsp[(3) - (3)]. no )->lexeme, lineno);
+		  pack_nodes(&children, 1, pf3);
+		  (yyval. no ) = create_node(lineno, cond_node, "expbool", NULL, 2, children);
+		  /*printf("expbool %s , %s, %d \n", $1->lexeme, $3->lexeme, lineno);*/
 		}
     break;
 
   case 52:
-#line 439 "pico.y"
+#line 442 "pico.y"
     { Node** children;
 		  Node* pf1 = (yyvsp[(1) - (3)]. no ); 
-		  Node* pf2 = create_leaf(lineno, inf_eq_node, (yyvsp[(2) - (3)]. cadeia ), NULL);
 		  Node* pf3 = (yyvsp[(3) - (3)]. no );
 		  pack_nodes(&children, 0, pf1);
-		  pack_nodes(&children, 1, pf2);
-		  pack_nodes(&children, 2, pf3);
-		  (yyval. no ) = create_node(lineno, cond_node, "expbool", NULL, 3, children);
-		  printf("expbool %s , %s, %d \n", (yyvsp[(1) - (3)]. no )->lexeme, (yyvsp[(3) - (3)]. no )->lexeme, lineno);
+		  pack_nodes(&children, 1, pf3);
+		  (yyval. no ) = create_node(lineno, cond_node, "expbool", NULL, 2, children);
+		  /*printf("expbool %s , %s, %d \n", $1->lexeme, $3->lexeme, lineno);*/
 		}
     break;
 
   case 53:
-#line 450 "pico.y"
+#line 451 "pico.y"
     { Node** children;
 		  Node* pf1 = (yyvsp[(1) - (3)]. no ); 
-		  Node* pf2 = create_leaf(lineno, sup_eq_node, (yyvsp[(2) - (3)]. cadeia ), NULL);
 		  Node* pf3 = (yyvsp[(3) - (3)]. no );
 		  pack_nodes(&children, 0, pf1);
-		  pack_nodes(&children, 1, pf2);
-		  pack_nodes(&children, 2, pf3);
-		  (yyval. no ) = create_node(lineno, cond_node, "expbool", NULL, 3, children);
-		  printf("expbool %s , %s, %d \n", (yyvsp[(1) - (3)]. no )->lexeme, (yyvsp[(3) - (3)]. no )->lexeme, lineno);
+		  pack_nodes(&children, 1, pf3);
+		  (yyval. no ) = create_node(lineno, cond_node, "expbool", NULL, 2, children);
+		  /*printf("expbool %s , %s, %d \n", $1->lexeme, $3->lexeme, lineno);*/
 		}
     break;
 
   case 54:
-#line 461 "pico.y"
+#line 460 "pico.y"
     { Node** children;
 		  Node* pf1 = (yyvsp[(1) - (3)]. no ); 
-		  Node* pf2 = create_leaf(lineno, eq_node, (yyvsp[(2) - (3)]. cadeia ), NULL);
 		  Node* pf3 = (yyvsp[(3) - (3)]. no );
 		  pack_nodes(&children, 0, pf1);
-		  pack_nodes(&children, 1, pf2);
-		  pack_nodes(&children, 2, pf3);
-		  (yyval. no ) = create_node(lineno, cond_node, "expbool", NULL, 3, children);
-		  printf("expbool %s , %s, %d \n", (yyvsp[(1) - (3)]. no )->lexeme, (yyvsp[(3) - (3)]. no )->lexeme, lineno);
+		  pack_nodes(&children, 1, pf3);
+		  (yyval. no ) = create_node(lineno, cond_node, "expbool", NULL, 2, children);
+		  /*printf("expbool %s , %s, %d \n", $1->lexeme, $3->lexeme, lineno);*/
 		}
     break;
 
   case 55:
-#line 472 "pico.y"
+#line 469 "pico.y"
     { Node** children;
 		  Node* pf1 = (yyvsp[(1) - (3)]. no ); 
-		  Node* pf2 = create_leaf(lineno, eq_node, (yyvsp[(2) - (3)]. cadeia ), NULL);
 		  Node* pf3 = (yyvsp[(3) - (3)]. no );
 		  pack_nodes(&children, 0, pf1);
-		  pack_nodes(&children, 1, pf2);
-		  pack_nodes(&children, 2, pf3);
-		  (yyval. no ) = create_node(lineno, cond_node, "expbool", NULL, 3, children);
-		  printf("expbool %s , %s, %d \n", (yyvsp[(1) - (3)]. no )->lexeme, (yyvsp[(3) - (3)]. no )->lexeme, lineno);
+		  pack_nodes(&children, 1, pf3);
+		  (yyval. no ) = create_node(lineno, cond_node, "expbool", NULL, 2, children);
+		  /*printf("expbool %s , %s, %d \n", $1->lexeme, $3->lexeme, lineno);*/
 		}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 2049 "y.tab.c"
+#line 2043 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2259,12 +2253,10 @@ yyreturn:
 }
 
 
-#line 483 "pico.y"
+#line 478 "pico.y"
 
  /* A partir daqui, insere-se qlqer codigo C necessario.
   */
-
-
 
 /*função que verifica se a extensão do arquivo é .pico
  *retorna 0 caso seja
@@ -2284,12 +2276,13 @@ int validExtension(char* s){
 void insert_list_of_vars(Node* n, int var_type)
 {
 	if (nb_of_children(n) == 0){
-		//printf( "variavel: %s \n", n->lexeme);
 		/* cria e insere uma nova entrada na tabela */
 		entry_t* var = malloc(sizeof(entry_t));	
 		var->name = n->lexeme;
 		var->type = var_type;	
 		var->size = size_of_type(var_type);
+		var->desloc = desloc;
+		desloc += var->size;
 		insert(s_table, var); 	
 	}
 	else {
@@ -2297,6 +2290,28 @@ void insert_list_of_vars(Node* n, int var_type)
 		for (i=1; i <= nb_of_children(n); i++)
 			insert_list_of_vars(child(n,i), var_type);
 	}
+}
+
+void insert_list_of_arrays(Node* n, int var_type, t_array* a)
+{
+	if (nb_of_children(n) == 0){
+		/*printf( "variavel: %s \n", n->lexeme);*/
+		/* cria e insere uma nova entrada na tabela */
+		entry_t* var = malloc(sizeof(entry_t));	
+		var->name = n->lexeme;
+		var->type = var_type;	
+		var->size = size_of_type(var_type)*(a->lim_sup - a->lim_inf +1) ;
+		var->desloc = desloc;
+		var->extra = a;
+		desloc += var->size;
+		insert(s_table, var); 	
+	}
+	else {
+		int i;
+		for (i=1; i <= nb_of_children(n); i++)
+			insert_list_of_vars(child(n,i), var_type);
+	} 
+
 }
 
 /* retorna o tamanho do tipo */
@@ -2317,12 +2332,12 @@ int size_of_type(int type)
 }
 
 
-
 char* progname;
 extern FILE* yyin;
 
 int main(int argc, char* argv[]) 
 {
+   
    /*inicializa deslocamento para declaração de variáveis*/
    desloc = 0;
 

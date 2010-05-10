@@ -102,7 +102,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 31 "pico.y"
+#line 38 "pico.y"
 {
   char* cadeia;
   struct _node* no;
