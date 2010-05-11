@@ -9,7 +9,7 @@
   #include "symbol_table.h"
 
   #define UNDEFINED_SYMBOL_ERROR -21
-
+  #define ARRAY_INDEXES_ERROR -35
    typedef struct 
    {
 	int c;
@@ -210,7 +210,13 @@ tipolista: INT '[' listadupla ']'
          ;
 
 listadupla: INT_LIT ':' INT_LIT
-		{ Node** children;
+		{ 
+
+		  if( atoi($1) > atoi($3) ){
+			return (ARRAY_INDEXES_ERROR);
+		  }
+
+		  Node** children;
 		  Node* pf1 = create_leaf(lineno, int_node, $1, NULL); 
 		  Node* pf3 = create_leaf(lineno, int_node, $3, NULL);
 		  pack_nodes(&children, 0, pf1);

@@ -140,7 +140,7 @@
   #include "symbol_table.h"
 
   #define UNDEFINED_SYMBOL_ERROR -21
-
+  #define ARRAY_INDEXES_ERROR -35
    typedef struct 
    {
 	int c;
@@ -515,10 +515,10 @@ static const yytype_uint16 yyrline[] =
 {
        0,   101,   101,   111,   114,   115,   124,   148,   150,   160,
      161,   164,   166,   168,   170,   174,   183,   192,   201,   212,
-     221,   234,   235,   246,   256,   259,   267,   283,   284,   295,
-     304,   313,   322,   331,   332,   334,   336,   337,   340,   350,
-     351,   365,   377,   379,   391,   393,   395,   396,   405,   414,
-     423,   432,   441,   450,   459,   468
+     227,   240,   241,   252,   262,   265,   273,   289,   290,   301,
+     310,   319,   328,   337,   338,   340,   342,   343,   346,   356,
+     357,   371,   383,   385,   397,   399,   401,   402,   411,   420,
+     429,   438,   447,   456,   465,   474
 };
 #endif
 
@@ -1663,7 +1663,13 @@ yyreduce:
 
   case 19:
 #line 213 "pico.y"
-    { Node** children;
+    { 
+
+		  if( atoi((yyvsp[(1) - (3)]. cadeia )) > atoi((yyvsp[(3) - (3)]. cadeia )) ){
+			return (ARRAY_INDEXES_ERROR);
+		  }
+
+		  Node** children;
 		  Node* pf1 = create_leaf(lineno, int_node, (yyvsp[(1) - (3)]. cadeia ), NULL); 
 		  Node* pf3 = create_leaf(lineno, int_node, (yyvsp[(3) - (3)]. cadeia ), NULL);
 		  pack_nodes(&children, 0, pf1);
@@ -1674,7 +1680,7 @@ yyreduce:
     break;
 
   case 20:
-#line 222 "pico.y"
+#line 228 "pico.y"
     { Node** children;
 		  Node* pf1 = create_leaf(lineno, int_node, (yyvsp[(1) - (5)]. cadeia ), NULL); 
 		  Node* pf2 = create_leaf(lineno, int_node, (yyvsp[(3) - (5)]. cadeia ), NULL);
@@ -1688,12 +1694,12 @@ yyreduce:
     break;
 
   case 21:
-#line 234 "pico.y"
+#line 240 "pico.y"
     { (yyval. no ) = (yyvsp[(1) - (2)]. no ); }
     break;
 
   case 22:
-#line 236 "pico.y"
+#line 242 "pico.y"
     { Node** children;
 		  Node* pf1 = (yyvsp[(1) - (3)]. no ); 
 		  Node* pf3 = (yyvsp[(3) - (3)]. no );
@@ -1705,7 +1711,7 @@ yyreduce:
     break;
 
   case 23:
-#line 247 "pico.y"
+#line 253 "pico.y"
     { printf("%s \n",(yyvsp[(3) - (3)]. no )->lexeme);
 		  Node** children;
 		  Node* pf1 = (yyvsp[(1) - (3)]. no ); 
@@ -1718,12 +1724,12 @@ yyreduce:
     break;
 
   case 24:
-#line 256 "pico.y"
+#line 262 "pico.y"
     { (yyval. no ) = (yyvsp[(1) - (1)]. no ); }
     break;
 
   case 25:
-#line 259 "pico.y"
+#line 265 "pico.y"
     { 	Node* n = create_leaf(lineno, idf_node, (yyvsp[(1) - (1)]. cadeia ), NULL); 
 		(yyval. no ) = n;
 		/* erro de variavel nao declarada */
@@ -1735,7 +1741,7 @@ yyreduce:
     break;
 
   case 26:
-#line 268 "pico.y"
+#line 274 "pico.y"
     { Node** children;
 		  Node* pf1 = create_leaf(lineno, idf_node, (yyvsp[(1) - (4)]. cadeia ), NULL); 
 		  Node* pf3 = (yyvsp[(3) - (4)]. no );
@@ -1752,12 +1758,12 @@ yyreduce:
     break;
 
   case 27:
-#line 283 "pico.y"
+#line 289 "pico.y"
     { (yyval. no ) = (yyvsp[(1) - (1)]. no ); }
     break;
 
   case 28:
-#line 285 "pico.y"
+#line 291 "pico.y"
     { Node** children;
 		  Node* pf1 = (yyvsp[(1) - (3)]. no ); 
 		  Node* pf3 = (yyvsp[(3) - (3)]. no );
@@ -1769,7 +1775,7 @@ yyreduce:
     break;
 
   case 29:
-#line 295 "pico.y"
+#line 301 "pico.y"
     {  char* str = calloc(strlen((yyvsp[(1) - (3)]. no )->lexeme)+strlen((yyvsp[(3) - (3)]. no )->lexeme)+2, sizeof(char*));
 			CAT(str,(yyvsp[(1) - (3)]. no )->lexeme,(yyvsp[(3) - (3)]. no )->lexeme,"+");
 			Node** children; 
@@ -1782,7 +1788,7 @@ yyreduce:
     break;
 
   case 30:
-#line 304 "pico.y"
+#line 310 "pico.y"
     { 	char* str = calloc(strlen((yyvsp[(1) - (3)]. no )->lexeme)+strlen((yyvsp[(3) - (3)]. no )->lexeme)+2, sizeof(char*)); 
 			CAT(str,(yyvsp[(1) - (3)]. no )->lexeme,(yyvsp[(3) - (3)]. no )->lexeme,"-");
 			Node** children; 
@@ -1795,7 +1801,7 @@ yyreduce:
     break;
 
   case 31:
-#line 313 "pico.y"
+#line 319 "pico.y"
     { 	char* str = calloc(strlen((yyvsp[(1) - (3)]. no )->lexeme)+strlen((yyvsp[(3) - (3)]. no )->lexeme)+2, sizeof(char*)); 
 			CAT(str,(yyvsp[(1) - (3)]. no )->lexeme,(yyvsp[(3) - (3)]. no )->lexeme,"*");
 			Node** children; 
@@ -1808,7 +1814,7 @@ yyreduce:
     break;
 
   case 32:
-#line 322 "pico.y"
+#line 328 "pico.y"
     { 	char* str = calloc(strlen((yyvsp[(1) - (3)]. no )->lexeme)+strlen((yyvsp[(3) - (3)]. no )->lexeme)+2, sizeof(char*)); 
 			CAT(str,(yyvsp[(1) - (3)]. no )->lexeme,(yyvsp[(3) - (3)]. no )->lexeme,"/");
 			Node** children; 
@@ -1821,34 +1827,34 @@ yyreduce:
     break;
 
   case 33:
-#line 331 "pico.y"
+#line 337 "pico.y"
     { 	(yyval. no ) = (yyvsp[(2) - (3)]. no ); }
     break;
 
   case 34:
-#line 332 "pico.y"
+#line 338 "pico.y"
     { 	Node* n = create_leaf(lineno, int_node, (yyvsp[(1) - (1)]. cadeia ), NULL); 
 		       	(yyval. no ) = n;}
     break;
 
   case 35:
-#line 334 "pico.y"
+#line 340 "pico.y"
     { 	Node* n = create_leaf(lineno, float_node, (yyvsp[(1) - (1)]. cadeia ), NULL); 
 		       	(yyval. no ) = n;}
     break;
 
   case 36:
-#line 336 "pico.y"
+#line 342 "pico.y"
     {  (yyval. no ) = (yyvsp[(1) - (1)]. no );}
     break;
 
   case 37:
-#line 337 "pico.y"
+#line 343 "pico.y"
     {	(yyval. no ) = (yyvsp[(1) - (1)]. no );}
     break;
 
   case 38:
-#line 341 "pico.y"
+#line 347 "pico.y"
     {Node** children; 
 		 Node* pf1 = create_leaf(lineno, idf_node, (yyvsp[(1) - (4)]. cadeia ), NULL);
  		 Node* pf3 = (yyvsp[(3) - (4)]. no ); 
@@ -1859,12 +1865,12 @@ yyreduce:
     break;
 
   case 39:
-#line 350 "pico.y"
+#line 356 "pico.y"
     { (yyval. no ) = (yyvsp[(1) - (1)]. no ); printf("%s \n",(yyvsp[(1) - (1)]. no )->lexeme);}
     break;
 
   case 40:
-#line 352 "pico.y"
+#line 358 "pico.y"
     {Node** children; 
 		 Node* pf1 = create_leaf(lineno, if_node, (yyvsp[(1) - (7)]. cadeia ), NULL);
  		 Node* pf2 = (yyvsp[(3) - (7)]. no );
@@ -1881,7 +1887,7 @@ yyreduce:
     break;
 
   case 41:
-#line 366 "pico.y"
+#line 372 "pico.y"
     {Node** children; 
 		 Node* pf1 = create_leaf(lineno, while_node, (yyvsp[(1) - (7)]. cadeia ), NULL);
  		 Node* pf2 = (yyvsp[(3) - (7)]. no );
@@ -1894,13 +1900,13 @@ yyreduce:
     break;
 
   case 42:
-#line 377 "pico.y"
+#line 383 "pico.y"
     { 	Node* n = create_leaf(lineno, if_node, (yyvsp[(1) - (1)]. cadeia ), NULL); 
 		       	(yyval. no ) = n;}
     break;
 
   case 43:
-#line 380 "pico.y"
+#line 386 "pico.y"
     {Node** children; 
 		 Node* pf1 = create_leaf(lineno, if_node, (yyvsp[(1) - (3)]. cadeia ), NULL);
  		 Node* pf2 = (yyvsp[(2) - (3)]. no );
@@ -1913,24 +1919,24 @@ yyreduce:
     break;
 
   case 44:
-#line 391 "pico.y"
+#line 397 "pico.y"
     { 	Node* n = create_leaf(lineno, true_node, (yyvsp[(1) - (1)]. cadeia ), NULL); 
 		       	(yyval. no ) = n;}
     break;
 
   case 45:
-#line 393 "pico.y"
+#line 399 "pico.y"
     { 	Node* n = create_leaf(lineno, false_node, (yyvsp[(1) - (1)]. cadeia ), NULL); 
 		       	(yyval. no ) = n;}
     break;
 
   case 46:
-#line 395 "pico.y"
+#line 401 "pico.y"
     { (yyval. no ) = (yyvsp[(2) - (3)]. no );}
     break;
 
   case 47:
-#line 397 "pico.y"
+#line 403 "pico.y"
     { Node** children;
 		  Node* pf1 = (yyvsp[(1) - (3)]. no ); 
 		  Node* pf3 = (yyvsp[(3) - (3)]. no );
@@ -1942,7 +1948,7 @@ yyreduce:
     break;
 
   case 48:
-#line 406 "pico.y"
+#line 412 "pico.y"
     { Node** children;
 		  Node* pf1 = (yyvsp[(1) - (3)]. no ); 
 		  Node* pf3 = (yyvsp[(3) - (3)]. no );
@@ -1954,7 +1960,7 @@ yyreduce:
     break;
 
   case 49:
-#line 415 "pico.y"
+#line 421 "pico.y"
     { Node** children; 
 		  Node* pf1 = create_leaf(lineno, not_node, (yyvsp[(1) - (2)]. cadeia ), NULL);
 		  Node* pf2 = (yyvsp[(2) - (2)]. no );
@@ -1966,7 +1972,7 @@ yyreduce:
     break;
 
   case 50:
-#line 424 "pico.y"
+#line 430 "pico.y"
     { Node** children;
 		  Node* pf1 = (yyvsp[(1) - (3)]. no ); 
 		  Node* pf3 = (yyvsp[(3) - (3)]. no );
@@ -1978,7 +1984,7 @@ yyreduce:
     break;
 
   case 51:
-#line 433 "pico.y"
+#line 439 "pico.y"
     { Node** children;
 		  Node* pf1 = (yyvsp[(1) - (3)]. no ); 
 		  Node* pf3 = (yyvsp[(3) - (3)]. no );
@@ -1990,7 +1996,7 @@ yyreduce:
     break;
 
   case 52:
-#line 442 "pico.y"
+#line 448 "pico.y"
     { Node** children;
 		  Node* pf1 = (yyvsp[(1) - (3)]. no ); 
 		  Node* pf3 = (yyvsp[(3) - (3)]. no );
@@ -2002,7 +2008,7 @@ yyreduce:
     break;
 
   case 53:
-#line 451 "pico.y"
+#line 457 "pico.y"
     { Node** children;
 		  Node* pf1 = (yyvsp[(1) - (3)]. no ); 
 		  Node* pf3 = (yyvsp[(3) - (3)]. no );
@@ -2014,7 +2020,7 @@ yyreduce:
     break;
 
   case 54:
-#line 460 "pico.y"
+#line 466 "pico.y"
     { Node** children;
 		  Node* pf1 = (yyvsp[(1) - (3)]. no ); 
 		  Node* pf3 = (yyvsp[(3) - (3)]. no );
@@ -2026,7 +2032,7 @@ yyreduce:
     break;
 
   case 55:
-#line 469 "pico.y"
+#line 475 "pico.y"
     { Node** children;
 		  Node* pf1 = (yyvsp[(1) - (3)]. no ); 
 		  Node* pf3 = (yyvsp[(3) - (3)]. no );
@@ -2039,7 +2045,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 2043 "y.tab.c"
+#line 2049 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2253,7 +2259,7 @@ yyreturn:
 }
 
 
-#line 478 "pico.y"
+#line 484 "pico.y"
 
  /* A partir daqui, insere-se qlqer codigo C necessario.
   */
