@@ -19,7 +19,7 @@ Node* create_node(int nl, Node_type t, char* lex,
 	}
 	
 	/* verifica se eh um tipo de nodo valido (299-336)*/
-	if (t < 299 || t > 336 || t == 334){
+	if (t < 299 || t > 340 == 334){
 		printf("Erro, tipo do nodo nao identificado\n");
 		return NULL;
 	}	
@@ -43,7 +43,7 @@ Node* create_node(int nl, Node_type t, char* lex,
 Node* create_leaf(int nl, Node_type t, char* lex, void* att) {
 	
 	/* verifica se eh um tipo de nodo valido (299-336)*/
-	if (t < 299 || t > 336){
+	if (t < 299 || t > 340){
 		printf("Erro, tipo do nodo nao identificado\n");
 		return NULL;
 	}	
@@ -70,7 +70,7 @@ int nb_of_children(Node* n) {
    
    /* verifica se o nodo nao eh NULL */
    if (n == NULL) {
-	   printf("Error, node is NULL\n");
+	   printf("Error, node is NULL (nb_of_children)\n");
 	   return -1;
    }
    
@@ -83,7 +83,7 @@ Node* child(Node* n, int i) {
   
    /* verifica se o nodo nao eh NULL */
    if (n == NULL) {
-	   printf("Error, node is NULL\n");
+	   printf("Error, node is NULL (child)\n");
 	   return NULL;
    }
    
@@ -152,5 +152,23 @@ int pack_nodes(Node*** array_of_nodes, const int cur_size, Node* n) {
 	(*array_of_nodes)[cur_size] = n;
 	
 	return cur_size+1;
+}
+
+/* Imprime a árvore */
+void print_tree(Node* n){
+	if (nb_of_children(n) == 0){
+		/* cria e insere uma nova entrada na tabela */
+		printf("%s ", n->lexeme);	
+	}
+	else {
+		int i;
+		
+		for (i=1; i <= nb_of_children(n); i++){
+			print_tree(child(n,i));
+			/*if (i == nb_of_children(n)) printf(" \n");*/
+		}
+		printf(" [%s] \n", n->lexeme);
+		
+	}
 }
 

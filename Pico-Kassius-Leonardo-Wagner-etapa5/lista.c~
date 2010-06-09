@@ -6,6 +6,8 @@
 #ifndef _LISTA_C_
 #define _LISTA_C_
 
+extern int proxima_inst;
+
 struct tac* create_inst_tac(const char* res, const char* arg1,
                  const char* op, const char* arg2) {
    struct tac * t = (struct tac *)malloc(sizeof(struct tac));
@@ -21,7 +23,30 @@ struct tac* create_inst_tac(const char* res, const char* arg1,
 }
 
 void print_inst_tac(FILE* out, struct tac i) {
-   fprintf(out, "%s\t:= %s %s %s\n", i.res, i.arg1, i.op, i.arg2);
+	if (i.op[0]=='_') {
+   		fprintf(out, "%s %s\n", i.res, i.arg1);
+	}
+	else if (i.op[0]==')') {
+		fprintf(out, "%s := %s(%s)\n", i.res, i.arg2, i.arg1);
+	}	
+	else if (i.op[0]=='(') {
+		fprintf(out, "%s(%s) := %s\n", i.res, i.arg1, i.arg2);
+	}
+	else if (strcmp(i.op, "GOTO") == 0) {
+		fprintf(out, "GOTO %s \n", i.res);
+	}
+	else if (strcmp(i.op, "GOTO") == 0) { //gera instrucao pro if
+		fprintf(out, "%s %s\n", i.res, i.arg2);
+	}/*
+	else if (strcmp(i.op, "IF") == 0) { //gera instrucao pro goto
+		fprintf(out, "%s %s\n", i.res, i.arg1);
+	}*/
+	else if (strcmp(i.op, "LABEL") == 0) { //gera instrucao pro goto
+		fprintf(out, "%s:\n", i.res);
+	}
+	else {
+		fprintf(out, "%s := %s %s %s\n", i.res, i.arg1, i.op, i.arg2);
+	}
 }
 
 /* A IMPLEMENTAR */
@@ -38,7 +63,8 @@ void print_tac(FILE* out, struct node_tac * code) {
 }
 
 void append_inst_tac(struct node_tac ** code_ref, struct tac * inst) {
-  /* A IMPLEMENTAR */
+
+  proxima_inst++;
 
   /* Aloca memória para novo nodo */
   struct node_tac * novo = (struct node_tac *)malloc(sizeof(struct node_tac));
@@ -59,6 +85,7 @@ void append_inst_tac(struct node_tac ** code_ref, struct tac * inst) {
           novo->prev = temp;           //o anterior é o último da lista
           last = temp;                 //guarda o último da lista
           temp = temp->next;
+	  //printf("%s \n",temp);
       }
       last->next = novo;               //atualiza o ponteiro next do último da lista
       *code_ref = begin;               //atualiza o início da lista

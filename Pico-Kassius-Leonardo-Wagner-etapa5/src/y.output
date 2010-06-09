@@ -1,0 +1,1712 @@
+
+
+Terminals which are not used:
+
+   QUOTE
+   DQUOTE
+   FOR
+   NEXT
+   UNTIL
+   REPEAT
+
+
+Conflict in state 62 between rule 30 and token '+' resolved as reduce.
+Conflict in state 62 between rule 30 and token '-' resolved as reduce.
+Conflict in state 62 between rule 30 and token '*' resolved as shift.
+Conflict in state 62 between rule 30 and token '/' resolved as shift.
+Conflict in state 63 between rule 31 and token '+' resolved as reduce.
+Conflict in state 63 between rule 31 and token '-' resolved as reduce.
+Conflict in state 63 between rule 31 and token '*' resolved as shift.
+Conflict in state 63 between rule 31 and token '/' resolved as shift.
+Conflict in state 64 between rule 32 and token '+' resolved as reduce.
+Conflict in state 64 between rule 32 and token '-' resolved as reduce.
+Conflict in state 64 between rule 32 and token '*' resolved as reduce.
+Conflict in state 64 between rule 32 and token '/' resolved as reduce.
+Conflict in state 65 between rule 33 and token '+' resolved as reduce.
+Conflict in state 65 between rule 33 and token '-' resolved as reduce.
+Conflict in state 65 between rule 33 and token '*' resolved as reduce.
+Conflict in state 65 between rule 33 and token '/' resolved as reduce.
+Conflict in state 69 between rule 51 and token AND resolved as reduce.
+Conflict in state 69 between rule 51 and token OR resolved as reduce.
+Conflict in state 96 between rule 49 and token AND resolved as reduce.
+Conflict in state 96 between rule 49 and token OR resolved as reduce.
+Conflict in state 97 between rule 50 and token AND resolved as shift.
+Conflict in state 97 between rule 50 and token OR resolved as reduce.
+
+Grammar
+rule 1    code -> declaracoes acoes
+rule 2    code -> acoes
+rule 3    declaracoes -> declaracao ';'
+rule 4    declaracoes -> declaracoes declaracao ';'
+rule 5    declaracao -> listadeclaracao ':' tipo
+rule 6    listadeclaracao -> IDF
+rule 7    listadeclaracao -> IDF ',' listadeclaracao
+rule 8    tipo -> tipounico
+rule 9    tipo -> tipolista
+rule 10   tipounico -> INT
+rule 11   tipounico -> DOUBLE
+rule 12   tipounico -> REAL
+rule 13   tipounico -> CHAR
+rule 14   tipolista -> INT '[' listadupla ']'
+rule 15   tipolista -> DOUBLE '[' listadupla ']'
+rule 16   tipolista -> REAL '[' listadupla ']'
+rule 17   tipolista -> CHAR '[' listadupla ']'
+rule 18   listadupla -> INT_LIT ':' INT_LIT
+rule 19   listadupla -> INT_LIT ':' INT_LIT ',' listadupla
+rule 20   acoes -> comando ';'
+rule 21   acoes -> comando ';' acoes
+rule 22   comando -> lvalue '=' expr
+rule 23   comando -> enunciado
+rule 24   lvalue -> IDF
+rule 25   lvalue -> IDF '[' listaexpr ']'
+rule 26   rvalue -> IDF
+rule 27   rvalue -> IDF '[' listaexpr ']'
+rule 28   listaexpr -> expr
+rule 29   listaexpr -> expr ',' listaexpr
+rule 30   expr -> expr '+' expr
+rule 31   expr -> expr '-' expr
+rule 32   expr -> expr '*' expr
+rule 33   expr -> expr '/' expr
+rule 34   expr -> '(' expr ')'
+rule 35   expr -> INT_LIT
+rule 36   expr -> F_LIT
+rule 37   expr -> rvalue
+rule 38   expr -> chamaproc
+rule 39   chamaproc -> IDF '(' listaexpr ')'
+rule 40   enunciado -> expr
+rule 41   enunciado -> IF '(' expbool ')' THEN acoes fiminstcontrole
+rule 42   enunciado -> WHILE '(' expbool ')' '{' acoes '}'
+rule 43   enunciado -> PRINTF '(' expr ')'
+rule 44   fiminstcontrole -> END
+rule 45   fiminstcontrole -> ELSE acoes END
+rule 46   expbool -> TRUE
+rule 47   expbool -> FALSE
+rule 48   expbool -> '(' expbool ')'
+rule 49   expbool -> expbool AND expbool
+rule 50   expbool -> expbool OR expbool
+rule 51   expbool -> NOT expbool
+rule 52   expbool -> expr '>' expr
+rule 53   expbool -> expr '<' expr
+rule 54   expbool -> expr LE expr
+rule 55   expbool -> expr GE expr
+rule 56   expbool -> expr EQ expr
+rule 57   expbool -> expr NE expr
+
+Terminals, with rules where they appear
+
+$ (-1)
+'(' (40) 34 39 41 42 43 48
+')' (41) 34 39 41 42 43 48
+'*' (42) 32
+'+' (43) 30
+',' (44) 7 19 29
+'-' (45) 31
+'/' (47) 33
+':' (58) 5 18 19
+';' (59) 3 4 20 21
+'<' (60) 53
+'=' (61) 22
+'>' (62) 52
+'[' (91) 14 15 16 17 25 27
+']' (93) 14 15 16 17 25 27
+'{' (123) 42
+'}' (125) 42
+error (256)
+IDF (258) 6 7 24 25 26 27 39
+INT (259) 10 14
+DOUBLE (260) 11 15
+REAL (261) 12 16
+CHAR (262) 13 17
+QUOTE (263)
+DQUOTE (264)
+LE (265) 54
+GE (266) 55
+EQ (267) 56
+NE (268) 57
+AND (269) 49
+OR (270) 50
+NOT (271) 51
+IF (272) 41
+THEN (273) 41
+ELSE (274) 45
+WHILE (275) 42
+INT_LIT (276) 18 19 35
+F_LIT (277) 36
+END (278) 44 45
+TRUE (279) 46
+FALSE (280) 47
+PRINTF (281) 43
+FOR (282)
+NEXT (283)
+UNTIL (284)
+REPEAT (285)
+
+Nonterminals, with rules where they appear
+
+code (47)
+    on left: 1 2
+declaracoes (48)
+    on left: 3 4, on right: 1 4
+declaracao (49)
+    on left: 5, on right: 3 4
+listadeclaracao (50)
+    on left: 6 7, on right: 5 7
+tipo (51)
+    on left: 8 9, on right: 5
+tipounico (52)
+    on left: 10 11 12 13, on right: 8
+tipolista (53)
+    on left: 14 15 16 17, on right: 9
+listadupla (54)
+    on left: 18 19, on right: 14 15 16 17 19
+acoes (55)
+    on left: 20 21, on right: 1 2 21 41 42 45
+comando (56)
+    on left: 22 23, on right: 20 21
+lvalue (57)
+    on left: 24 25, on right: 22
+rvalue (58)
+    on left: 26 27, on right: 37
+listaexpr (59)
+    on left: 28 29, on right: 25 27 29 39
+expr (60)
+    on left: 30 31 32 33 34 35 36 37 38, on right: 22 28 29 30 31 32
+    33 34 40 43 52 53 54 55 56 57
+chamaproc (61)
+    on left: 39, on right: 38
+enunciado (62)
+    on left: 40 41 42 43, on right: 23
+fiminstcontrole (63)
+    on left: 44 45, on right: 41
+expbool (64)
+    on left: 46 47 48 49 50 51 52 53 54 55 56 57, on right: 41 42 48
+    49 50 51
+
+
+state 0
+
+    IDF 	shift, and go to state 1
+    IF  	shift, and go to state 2
+    WHILE	shift, and go to state 3
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    PRINTF	shift, and go to state 6
+    '(' 	shift, and go to state 7
+
+    code	go to state 122
+    declaracoes	go to state 8
+    declaracao	go to state 9
+    listadeclaracao	go to state 10
+    acoes	go to state 11
+    comando	go to state 12
+    lvalue	go to state 13
+    rvalue	go to state 14
+    expr	go to state 15
+    chamaproc	go to state 16
+    enunciado	go to state 17
+
+
+
+state 1
+
+    listadeclaracao  ->  IDF .   (rule 6)
+    listadeclaracao  ->  IDF . ',' listadeclaracao   (rule 7)
+    lvalue  ->  IDF .   (rule 24)
+    lvalue  ->  IDF . '[' listaexpr ']'   (rule 25)
+    rvalue  ->  IDF .   (rule 26)
+    rvalue  ->  IDF . '[' listaexpr ']'   (rule 27)
+    chamaproc  ->  IDF . '(' listaexpr ')'   (rule 39)
+
+    ',' 	shift, and go to state 18
+    '[' 	shift, and go to state 19
+    '(' 	shift, and go to state 20
+
+    '=' 	reduce using rule 24 (lvalue)
+    $default	reduce using rule 26 (rvalue)
+
+
+
+state 2
+
+    enunciado  ->  IF . '(' expbool ')' THEN acoes fiminstcontrole   (rule 41)
+
+    '(' 	shift, and go to state 21
+
+
+
+state 3
+
+    enunciado  ->  WHILE . '(' expbool ')' '{' acoes '}'   (rule 42)
+
+    '(' 	shift, and go to state 22
+
+
+
+state 4
+
+    expr  ->  INT_LIT .   (rule 35)
+
+    $default	reduce using rule 35 (expr)
+
+
+
+state 5
+
+    expr  ->  F_LIT .   (rule 36)
+
+    $default	reduce using rule 36 (expr)
+
+
+
+state 6
+
+    enunciado  ->  PRINTF . '(' expr ')'   (rule 43)
+
+    '(' 	shift, and go to state 23
+
+
+
+state 7
+
+    expr  ->  '(' . expr ')'   (rule 34)
+
+    IDF 	shift, and go to state 24
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    '(' 	shift, and go to state 7
+
+    rvalue	go to state 14
+    expr	go to state 25
+    chamaproc	go to state 16
+
+
+
+state 8
+
+    code  ->  declaracoes . acoes   (rule 1)
+    declaracoes  ->  declaracoes . declaracao ';'   (rule 4)
+
+    IDF 	shift, and go to state 1
+    IF  	shift, and go to state 2
+    WHILE	shift, and go to state 3
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    PRINTF	shift, and go to state 6
+    '(' 	shift, and go to state 7
+
+    declaracao	go to state 26
+    listadeclaracao	go to state 10
+    acoes	go to state 27
+    comando	go to state 12
+    lvalue	go to state 13
+    rvalue	go to state 14
+    expr	go to state 15
+    chamaproc	go to state 16
+    enunciado	go to state 17
+
+
+
+state 9
+
+    declaracoes  ->  declaracao . ';'   (rule 3)
+
+    ';' 	shift, and go to state 28
+
+
+
+state 10
+
+    declaracao  ->  listadeclaracao . ':' tipo   (rule 5)
+
+    ':' 	shift, and go to state 29
+
+
+
+state 11
+
+    code  ->  acoes .   (rule 2)
+
+    $default	reduce using rule 2 (code)
+
+
+
+state 12
+
+    acoes  ->  comando . ';'   (rule 20)
+    acoes  ->  comando . ';' acoes   (rule 21)
+
+    ';' 	shift, and go to state 30
+
+
+
+state 13
+
+    comando  ->  lvalue . '=' expr   (rule 22)
+
+    '=' 	shift, and go to state 31
+
+
+
+state 14
+
+    expr  ->  rvalue .   (rule 37)
+
+    $default	reduce using rule 37 (expr)
+
+
+
+state 15
+
+    expr  ->  expr . '+' expr   (rule 30)
+    expr  ->  expr . '-' expr   (rule 31)
+    expr  ->  expr . '*' expr   (rule 32)
+    expr  ->  expr . '/' expr   (rule 33)
+    enunciado  ->  expr .   (rule 40)
+
+    '+' 	shift, and go to state 32
+    '-' 	shift, and go to state 33
+    '*' 	shift, and go to state 34
+    '/' 	shift, and go to state 35
+
+    $default	reduce using rule 40 (enunciado)
+
+
+
+state 16
+
+    expr  ->  chamaproc .   (rule 38)
+
+    $default	reduce using rule 38 (expr)
+
+
+
+state 17
+
+    comando  ->  enunciado .   (rule 23)
+
+    $default	reduce using rule 23 (comando)
+
+
+
+state 18
+
+    listadeclaracao  ->  IDF ',' . listadeclaracao   (rule 7)
+
+    IDF 	shift, and go to state 36
+
+    listadeclaracao	go to state 37
+
+
+
+state 19
+
+    lvalue  ->  IDF '[' . listaexpr ']'   (rule 25)
+    rvalue  ->  IDF '[' . listaexpr ']'   (rule 27)
+
+    IDF 	shift, and go to state 24
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    '(' 	shift, and go to state 7
+
+    rvalue	go to state 14
+    listaexpr	go to state 38
+    expr	go to state 39
+    chamaproc	go to state 16
+
+
+
+state 20
+
+    chamaproc  ->  IDF '(' . listaexpr ')'   (rule 39)
+
+    IDF 	shift, and go to state 24
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    '(' 	shift, and go to state 7
+
+    rvalue	go to state 14
+    listaexpr	go to state 40
+    expr	go to state 39
+    chamaproc	go to state 16
+
+
+
+state 21
+
+    enunciado  ->  IF '(' . expbool ')' THEN acoes fiminstcontrole   (rule 41)
+
+    IDF 	shift, and go to state 24
+    NOT 	shift, and go to state 41
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    TRUE	shift, and go to state 42
+    FALSE	shift, and go to state 43
+    '(' 	shift, and go to state 44
+
+    rvalue	go to state 14
+    expr	go to state 45
+    chamaproc	go to state 16
+    expbool	go to state 46
+
+
+
+state 22
+
+    enunciado  ->  WHILE '(' . expbool ')' '{' acoes '}'   (rule 42)
+
+    IDF 	shift, and go to state 24
+    NOT 	shift, and go to state 41
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    TRUE	shift, and go to state 42
+    FALSE	shift, and go to state 43
+    '(' 	shift, and go to state 44
+
+    rvalue	go to state 14
+    expr	go to state 45
+    chamaproc	go to state 16
+    expbool	go to state 47
+
+
+
+state 23
+
+    enunciado  ->  PRINTF '(' . expr ')'   (rule 43)
+
+    IDF 	shift, and go to state 24
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    '(' 	shift, and go to state 7
+
+    rvalue	go to state 14
+    expr	go to state 48
+    chamaproc	go to state 16
+
+
+
+state 24
+
+    rvalue  ->  IDF .   (rule 26)
+    rvalue  ->  IDF . '[' listaexpr ']'   (rule 27)
+    chamaproc  ->  IDF . '(' listaexpr ')'   (rule 39)
+
+    '[' 	shift, and go to state 49
+    '(' 	shift, and go to state 20
+
+    $default	reduce using rule 26 (rvalue)
+
+
+
+state 25
+
+    expr  ->  expr . '+' expr   (rule 30)
+    expr  ->  expr . '-' expr   (rule 31)
+    expr  ->  expr . '*' expr   (rule 32)
+    expr  ->  expr . '/' expr   (rule 33)
+    expr  ->  '(' expr . ')'   (rule 34)
+
+    '+' 	shift, and go to state 32
+    '-' 	shift, and go to state 33
+    '*' 	shift, and go to state 34
+    '/' 	shift, and go to state 35
+    ')' 	shift, and go to state 50
+
+
+
+state 26
+
+    declaracoes  ->  declaracoes declaracao . ';'   (rule 4)
+
+    ';' 	shift, and go to state 51
+
+
+
+state 27
+
+    code  ->  declaracoes acoes .   (rule 1)
+
+    $default	reduce using rule 1 (code)
+
+
+
+state 28
+
+    declaracoes  ->  declaracao ';' .   (rule 3)
+
+    $default	reduce using rule 3 (declaracoes)
+
+
+
+state 29
+
+    declaracao  ->  listadeclaracao ':' . tipo   (rule 5)
+
+    INT 	shift, and go to state 52
+    DOUBLE	shift, and go to state 53
+    REAL	shift, and go to state 54
+    CHAR	shift, and go to state 55
+
+    tipo	go to state 56
+    tipounico	go to state 57
+    tipolista	go to state 58
+
+
+
+state 30
+
+    acoes  ->  comando ';' .   (rule 20)
+    acoes  ->  comando ';' . acoes   (rule 21)
+
+    IDF 	shift, and go to state 59
+    IF  	shift, and go to state 2
+    WHILE	shift, and go to state 3
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    PRINTF	shift, and go to state 6
+    '(' 	shift, and go to state 7
+
+    $default	reduce using rule 20 (acoes)
+
+    acoes	go to state 60
+    comando	go to state 12
+    lvalue	go to state 13
+    rvalue	go to state 14
+    expr	go to state 15
+    chamaproc	go to state 16
+    enunciado	go to state 17
+
+
+
+state 31
+
+    comando  ->  lvalue '=' . expr   (rule 22)
+
+    IDF 	shift, and go to state 24
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    '(' 	shift, and go to state 7
+
+    rvalue	go to state 14
+    expr	go to state 61
+    chamaproc	go to state 16
+
+
+
+state 32
+
+    expr  ->  expr '+' . expr   (rule 30)
+
+    IDF 	shift, and go to state 24
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    '(' 	shift, and go to state 7
+
+    rvalue	go to state 14
+    expr	go to state 62
+    chamaproc	go to state 16
+
+
+
+state 33
+
+    expr  ->  expr '-' . expr   (rule 31)
+
+    IDF 	shift, and go to state 24
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    '(' 	shift, and go to state 7
+
+    rvalue	go to state 14
+    expr	go to state 63
+    chamaproc	go to state 16
+
+
+
+state 34
+
+    expr  ->  expr '*' . expr   (rule 32)
+
+    IDF 	shift, and go to state 24
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    '(' 	shift, and go to state 7
+
+    rvalue	go to state 14
+    expr	go to state 64
+    chamaproc	go to state 16
+
+
+
+state 35
+
+    expr  ->  expr '/' . expr   (rule 33)
+
+    IDF 	shift, and go to state 24
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    '(' 	shift, and go to state 7
+
+    rvalue	go to state 14
+    expr	go to state 65
+    chamaproc	go to state 16
+
+
+
+state 36
+
+    listadeclaracao  ->  IDF .   (rule 6)
+    listadeclaracao  ->  IDF . ',' listadeclaracao   (rule 7)
+
+    ',' 	shift, and go to state 18
+
+    $default	reduce using rule 6 (listadeclaracao)
+
+
+
+state 37
+
+    listadeclaracao  ->  IDF ',' listadeclaracao .   (rule 7)
+
+    $default	reduce using rule 7 (listadeclaracao)
+
+
+
+state 38
+
+    lvalue  ->  IDF '[' listaexpr . ']'   (rule 25)
+    rvalue  ->  IDF '[' listaexpr . ']'   (rule 27)
+
+    ']' 	shift, and go to state 66
+
+
+
+state 39
+
+    listaexpr  ->  expr .   (rule 28)
+    listaexpr  ->  expr . ',' listaexpr   (rule 29)
+    expr  ->  expr . '+' expr   (rule 30)
+    expr  ->  expr . '-' expr   (rule 31)
+    expr  ->  expr . '*' expr   (rule 32)
+    expr  ->  expr . '/' expr   (rule 33)
+
+    '+' 	shift, and go to state 32
+    '-' 	shift, and go to state 33
+    '*' 	shift, and go to state 34
+    '/' 	shift, and go to state 35
+    ',' 	shift, and go to state 67
+
+    $default	reduce using rule 28 (listaexpr)
+
+
+
+state 40
+
+    chamaproc  ->  IDF '(' listaexpr . ')'   (rule 39)
+
+    ')' 	shift, and go to state 68
+
+
+
+state 41
+
+    expbool  ->  NOT . expbool   (rule 51)
+
+    IDF 	shift, and go to state 24
+    NOT 	shift, and go to state 41
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    TRUE	shift, and go to state 42
+    FALSE	shift, and go to state 43
+    '(' 	shift, and go to state 44
+
+    rvalue	go to state 14
+    expr	go to state 45
+    chamaproc	go to state 16
+    expbool	go to state 69
+
+
+
+state 42
+
+    expbool  ->  TRUE .   (rule 46)
+
+    $default	reduce using rule 46 (expbool)
+
+
+
+state 43
+
+    expbool  ->  FALSE .   (rule 47)
+
+    $default	reduce using rule 47 (expbool)
+
+
+
+state 44
+
+    expr  ->  '(' . expr ')'   (rule 34)
+    expbool  ->  '(' . expbool ')'   (rule 48)
+
+    IDF 	shift, and go to state 24
+    NOT 	shift, and go to state 41
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    TRUE	shift, and go to state 42
+    FALSE	shift, and go to state 43
+    '(' 	shift, and go to state 44
+
+    rvalue	go to state 14
+    expr	go to state 70
+    chamaproc	go to state 16
+    expbool	go to state 71
+
+
+
+state 45
+
+    expr  ->  expr . '+' expr   (rule 30)
+    expr  ->  expr . '-' expr   (rule 31)
+    expr  ->  expr . '*' expr   (rule 32)
+    expr  ->  expr . '/' expr   (rule 33)
+    expbool  ->  expr . '>' expr   (rule 52)
+    expbool  ->  expr . '<' expr   (rule 53)
+    expbool  ->  expr . LE expr   (rule 54)
+    expbool  ->  expr . GE expr   (rule 55)
+    expbool  ->  expr . EQ expr   (rule 56)
+    expbool  ->  expr . NE expr   (rule 57)
+
+    LE  	shift, and go to state 72
+    GE  	shift, and go to state 73
+    EQ  	shift, and go to state 74
+    NE  	shift, and go to state 75
+    '+' 	shift, and go to state 32
+    '-' 	shift, and go to state 33
+    '*' 	shift, and go to state 34
+    '/' 	shift, and go to state 35
+    '>' 	shift, and go to state 76
+    '<' 	shift, and go to state 77
+
+
+
+state 46
+
+    enunciado  ->  IF '(' expbool . ')' THEN acoes fiminstcontrole   (rule 41)
+    expbool  ->  expbool . AND expbool   (rule 49)
+    expbool  ->  expbool . OR expbool   (rule 50)
+
+    AND 	shift, and go to state 78
+    OR  	shift, and go to state 79
+    ')' 	shift, and go to state 80
+
+
+
+state 47
+
+    enunciado  ->  WHILE '(' expbool . ')' '{' acoes '}'   (rule 42)
+    expbool  ->  expbool . AND expbool   (rule 49)
+    expbool  ->  expbool . OR expbool   (rule 50)
+
+    AND 	shift, and go to state 78
+    OR  	shift, and go to state 79
+    ')' 	shift, and go to state 81
+
+
+
+state 48
+
+    expr  ->  expr . '+' expr   (rule 30)
+    expr  ->  expr . '-' expr   (rule 31)
+    expr  ->  expr . '*' expr   (rule 32)
+    expr  ->  expr . '/' expr   (rule 33)
+    enunciado  ->  PRINTF '(' expr . ')'   (rule 43)
+
+    '+' 	shift, and go to state 32
+    '-' 	shift, and go to state 33
+    '*' 	shift, and go to state 34
+    '/' 	shift, and go to state 35
+    ')' 	shift, and go to state 82
+
+
+
+state 49
+
+    rvalue  ->  IDF '[' . listaexpr ']'   (rule 27)
+
+    IDF 	shift, and go to state 24
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    '(' 	shift, and go to state 7
+
+    rvalue	go to state 14
+    listaexpr	go to state 83
+    expr	go to state 39
+    chamaproc	go to state 16
+
+
+
+state 50
+
+    expr  ->  '(' expr ')' .   (rule 34)
+
+    $default	reduce using rule 34 (expr)
+
+
+
+state 51
+
+    declaracoes  ->  declaracoes declaracao ';' .   (rule 4)
+
+    $default	reduce using rule 4 (declaracoes)
+
+
+
+state 52
+
+    tipounico  ->  INT .   (rule 10)
+    tipolista  ->  INT . '[' listadupla ']'   (rule 14)
+
+    '[' 	shift, and go to state 84
+
+    $default	reduce using rule 10 (tipounico)
+
+
+
+state 53
+
+    tipounico  ->  DOUBLE .   (rule 11)
+    tipolista  ->  DOUBLE . '[' listadupla ']'   (rule 15)
+
+    '[' 	shift, and go to state 85
+
+    $default	reduce using rule 11 (tipounico)
+
+
+
+state 54
+
+    tipounico  ->  REAL .   (rule 12)
+    tipolista  ->  REAL . '[' listadupla ']'   (rule 16)
+
+    '[' 	shift, and go to state 86
+
+    $default	reduce using rule 12 (tipounico)
+
+
+
+state 55
+
+    tipounico  ->  CHAR .   (rule 13)
+    tipolista  ->  CHAR . '[' listadupla ']'   (rule 17)
+
+    '[' 	shift, and go to state 87
+
+    $default	reduce using rule 13 (tipounico)
+
+
+
+state 56
+
+    declaracao  ->  listadeclaracao ':' tipo .   (rule 5)
+
+    $default	reduce using rule 5 (declaracao)
+
+
+
+state 57
+
+    tipo  ->  tipounico .   (rule 8)
+
+    $default	reduce using rule 8 (tipo)
+
+
+
+state 58
+
+    tipo  ->  tipolista .   (rule 9)
+
+    $default	reduce using rule 9 (tipo)
+
+
+
+state 59
+
+    lvalue  ->  IDF .   (rule 24)
+    lvalue  ->  IDF . '[' listaexpr ']'   (rule 25)
+    rvalue  ->  IDF .   (rule 26)
+    rvalue  ->  IDF . '[' listaexpr ']'   (rule 27)
+    chamaproc  ->  IDF . '(' listaexpr ')'   (rule 39)
+
+    '[' 	shift, and go to state 19
+    '(' 	shift, and go to state 20
+
+    '=' 	reduce using rule 24 (lvalue)
+    $default	reduce using rule 26 (rvalue)
+
+
+
+state 60
+
+    acoes  ->  comando ';' acoes .   (rule 21)
+
+    $default	reduce using rule 21 (acoes)
+
+
+
+state 61
+
+    comando  ->  lvalue '=' expr .   (rule 22)
+    expr  ->  expr . '+' expr   (rule 30)
+    expr  ->  expr . '-' expr   (rule 31)
+    expr  ->  expr . '*' expr   (rule 32)
+    expr  ->  expr . '/' expr   (rule 33)
+
+    '+' 	shift, and go to state 32
+    '-' 	shift, and go to state 33
+    '*' 	shift, and go to state 34
+    '/' 	shift, and go to state 35
+
+    $default	reduce using rule 22 (comando)
+
+
+
+state 62
+
+    expr  ->  expr . '+' expr   (rule 30)
+    expr  ->  expr '+' expr .   (rule 30)
+    expr  ->  expr . '-' expr   (rule 31)
+    expr  ->  expr . '*' expr   (rule 32)
+    expr  ->  expr . '/' expr   (rule 33)
+
+    '*' 	shift, and go to state 34
+    '/' 	shift, and go to state 35
+
+    $default	reduce using rule 30 (expr)
+
+
+
+state 63
+
+    expr  ->  expr . '+' expr   (rule 30)
+    expr  ->  expr . '-' expr   (rule 31)
+    expr  ->  expr '-' expr .   (rule 31)
+    expr  ->  expr . '*' expr   (rule 32)
+    expr  ->  expr . '/' expr   (rule 33)
+
+    '*' 	shift, and go to state 34
+    '/' 	shift, and go to state 35
+
+    $default	reduce using rule 31 (expr)
+
+
+
+state 64
+
+    expr  ->  expr . '+' expr   (rule 30)
+    expr  ->  expr . '-' expr   (rule 31)
+    expr  ->  expr . '*' expr   (rule 32)
+    expr  ->  expr '*' expr .   (rule 32)
+    expr  ->  expr . '/' expr   (rule 33)
+
+
+    $default	reduce using rule 32 (expr)
+
+
+
+state 65
+
+    expr  ->  expr . '+' expr   (rule 30)
+    expr  ->  expr . '-' expr   (rule 31)
+    expr  ->  expr . '*' expr   (rule 32)
+    expr  ->  expr . '/' expr   (rule 33)
+    expr  ->  expr '/' expr .   (rule 33)
+
+
+    $default	reduce using rule 33 (expr)
+
+
+
+state 66
+
+    lvalue  ->  IDF '[' listaexpr ']' .   (rule 25)
+    rvalue  ->  IDF '[' listaexpr ']' .   (rule 27)
+
+    '=' 	reduce using rule 25 (lvalue)
+    $default	reduce using rule 27 (rvalue)
+
+
+
+state 67
+
+    listaexpr  ->  expr ',' . listaexpr   (rule 29)
+
+    IDF 	shift, and go to state 24
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    '(' 	shift, and go to state 7
+
+    rvalue	go to state 14
+    listaexpr	go to state 88
+    expr	go to state 39
+    chamaproc	go to state 16
+
+
+
+state 68
+
+    chamaproc  ->  IDF '(' listaexpr ')' .   (rule 39)
+
+    $default	reduce using rule 39 (chamaproc)
+
+
+
+state 69
+
+    expbool  ->  expbool . AND expbool   (rule 49)
+    expbool  ->  expbool . OR expbool   (rule 50)
+    expbool  ->  NOT expbool .   (rule 51)
+
+
+    $default	reduce using rule 51 (expbool)
+
+
+
+state 70
+
+    expr  ->  expr . '+' expr   (rule 30)
+    expr  ->  expr . '-' expr   (rule 31)
+    expr  ->  expr . '*' expr   (rule 32)
+    expr  ->  expr . '/' expr   (rule 33)
+    expr  ->  '(' expr . ')'   (rule 34)
+    expbool  ->  expr . '>' expr   (rule 52)
+    expbool  ->  expr . '<' expr   (rule 53)
+    expbool  ->  expr . LE expr   (rule 54)
+    expbool  ->  expr . GE expr   (rule 55)
+    expbool  ->  expr . EQ expr   (rule 56)
+    expbool  ->  expr . NE expr   (rule 57)
+
+    LE  	shift, and go to state 72
+    GE  	shift, and go to state 73
+    EQ  	shift, and go to state 74
+    NE  	shift, and go to state 75
+    '+' 	shift, and go to state 32
+    '-' 	shift, and go to state 33
+    '*' 	shift, and go to state 34
+    '/' 	shift, and go to state 35
+    ')' 	shift, and go to state 50
+    '>' 	shift, and go to state 76
+    '<' 	shift, and go to state 77
+
+
+
+state 71
+
+    expbool  ->  '(' expbool . ')'   (rule 48)
+    expbool  ->  expbool . AND expbool   (rule 49)
+    expbool  ->  expbool . OR expbool   (rule 50)
+
+    AND 	shift, and go to state 78
+    OR  	shift, and go to state 79
+    ')' 	shift, and go to state 89
+
+
+
+state 72
+
+    expbool  ->  expr LE . expr   (rule 54)
+
+    IDF 	shift, and go to state 24
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    '(' 	shift, and go to state 7
+
+    rvalue	go to state 14
+    expr	go to state 90
+    chamaproc	go to state 16
+
+
+
+state 73
+
+    expbool  ->  expr GE . expr   (rule 55)
+
+    IDF 	shift, and go to state 24
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    '(' 	shift, and go to state 7
+
+    rvalue	go to state 14
+    expr	go to state 91
+    chamaproc	go to state 16
+
+
+
+state 74
+
+    expbool  ->  expr EQ . expr   (rule 56)
+
+    IDF 	shift, and go to state 24
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    '(' 	shift, and go to state 7
+
+    rvalue	go to state 14
+    expr	go to state 92
+    chamaproc	go to state 16
+
+
+
+state 75
+
+    expbool  ->  expr NE . expr   (rule 57)
+
+    IDF 	shift, and go to state 24
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    '(' 	shift, and go to state 7
+
+    rvalue	go to state 14
+    expr	go to state 93
+    chamaproc	go to state 16
+
+
+
+state 76
+
+    expbool  ->  expr '>' . expr   (rule 52)
+
+    IDF 	shift, and go to state 24
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    '(' 	shift, and go to state 7
+
+    rvalue	go to state 14
+    expr	go to state 94
+    chamaproc	go to state 16
+
+
+
+state 77
+
+    expbool  ->  expr '<' . expr   (rule 53)
+
+    IDF 	shift, and go to state 24
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    '(' 	shift, and go to state 7
+
+    rvalue	go to state 14
+    expr	go to state 95
+    chamaproc	go to state 16
+
+
+
+state 78
+
+    expbool  ->  expbool AND . expbool   (rule 49)
+
+    IDF 	shift, and go to state 24
+    NOT 	shift, and go to state 41
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    TRUE	shift, and go to state 42
+    FALSE	shift, and go to state 43
+    '(' 	shift, and go to state 44
+
+    rvalue	go to state 14
+    expr	go to state 45
+    chamaproc	go to state 16
+    expbool	go to state 96
+
+
+
+state 79
+
+    expbool  ->  expbool OR . expbool   (rule 50)
+
+    IDF 	shift, and go to state 24
+    NOT 	shift, and go to state 41
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    TRUE	shift, and go to state 42
+    FALSE	shift, and go to state 43
+    '(' 	shift, and go to state 44
+
+    rvalue	go to state 14
+    expr	go to state 45
+    chamaproc	go to state 16
+    expbool	go to state 97
+
+
+
+state 80
+
+    enunciado  ->  IF '(' expbool ')' . THEN acoes fiminstcontrole   (rule 41)
+
+    THEN	shift, and go to state 98
+
+
+
+state 81
+
+    enunciado  ->  WHILE '(' expbool ')' . '{' acoes '}'   (rule 42)
+
+    '{' 	shift, and go to state 99
+
+
+
+state 82
+
+    enunciado  ->  PRINTF '(' expr ')' .   (rule 43)
+
+    $default	reduce using rule 43 (enunciado)
+
+
+
+state 83
+
+    rvalue  ->  IDF '[' listaexpr . ']'   (rule 27)
+
+    ']' 	shift, and go to state 100
+
+
+
+state 84
+
+    tipolista  ->  INT '[' . listadupla ']'   (rule 14)
+
+    INT_LIT	shift, and go to state 101
+
+    listadupla	go to state 102
+
+
+
+state 85
+
+    tipolista  ->  DOUBLE '[' . listadupla ']'   (rule 15)
+
+    INT_LIT	shift, and go to state 101
+
+    listadupla	go to state 103
+
+
+
+state 86
+
+    tipolista  ->  REAL '[' . listadupla ']'   (rule 16)
+
+    INT_LIT	shift, and go to state 101
+
+    listadupla	go to state 104
+
+
+
+state 87
+
+    tipolista  ->  CHAR '[' . listadupla ']'   (rule 17)
+
+    INT_LIT	shift, and go to state 101
+
+    listadupla	go to state 105
+
+
+
+state 88
+
+    listaexpr  ->  expr ',' listaexpr .   (rule 29)
+
+    $default	reduce using rule 29 (listaexpr)
+
+
+
+state 89
+
+    expbool  ->  '(' expbool ')' .   (rule 48)
+
+    $default	reduce using rule 48 (expbool)
+
+
+
+state 90
+
+    expr  ->  expr . '+' expr   (rule 30)
+    expr  ->  expr . '-' expr   (rule 31)
+    expr  ->  expr . '*' expr   (rule 32)
+    expr  ->  expr . '/' expr   (rule 33)
+    expbool  ->  expr LE expr .   (rule 54)
+
+    '+' 	shift, and go to state 32
+    '-' 	shift, and go to state 33
+    '*' 	shift, and go to state 34
+    '/' 	shift, and go to state 35
+
+    $default	reduce using rule 54 (expbool)
+
+
+
+state 91
+
+    expr  ->  expr . '+' expr   (rule 30)
+    expr  ->  expr . '-' expr   (rule 31)
+    expr  ->  expr . '*' expr   (rule 32)
+    expr  ->  expr . '/' expr   (rule 33)
+    expbool  ->  expr GE expr .   (rule 55)
+
+    '+' 	shift, and go to state 32
+    '-' 	shift, and go to state 33
+    '*' 	shift, and go to state 34
+    '/' 	shift, and go to state 35
+
+    $default	reduce using rule 55 (expbool)
+
+
+
+state 92
+
+    expr  ->  expr . '+' expr   (rule 30)
+    expr  ->  expr . '-' expr   (rule 31)
+    expr  ->  expr . '*' expr   (rule 32)
+    expr  ->  expr . '/' expr   (rule 33)
+    expbool  ->  expr EQ expr .   (rule 56)
+
+    '+' 	shift, and go to state 32
+    '-' 	shift, and go to state 33
+    '*' 	shift, and go to state 34
+    '/' 	shift, and go to state 35
+
+    $default	reduce using rule 56 (expbool)
+
+
+
+state 93
+
+    expr  ->  expr . '+' expr   (rule 30)
+    expr  ->  expr . '-' expr   (rule 31)
+    expr  ->  expr . '*' expr   (rule 32)
+    expr  ->  expr . '/' expr   (rule 33)
+    expbool  ->  expr NE expr .   (rule 57)
+
+    '+' 	shift, and go to state 32
+    '-' 	shift, and go to state 33
+    '*' 	shift, and go to state 34
+    '/' 	shift, and go to state 35
+
+    $default	reduce using rule 57 (expbool)
+
+
+
+state 94
+
+    expr  ->  expr . '+' expr   (rule 30)
+    expr  ->  expr . '-' expr   (rule 31)
+    expr  ->  expr . '*' expr   (rule 32)
+    expr  ->  expr . '/' expr   (rule 33)
+    expbool  ->  expr '>' expr .   (rule 52)
+
+    '+' 	shift, and go to state 32
+    '-' 	shift, and go to state 33
+    '*' 	shift, and go to state 34
+    '/' 	shift, and go to state 35
+
+    $default	reduce using rule 52 (expbool)
+
+
+
+state 95
+
+    expr  ->  expr . '+' expr   (rule 30)
+    expr  ->  expr . '-' expr   (rule 31)
+    expr  ->  expr . '*' expr   (rule 32)
+    expr  ->  expr . '/' expr   (rule 33)
+    expbool  ->  expr '<' expr .   (rule 53)
+
+    '+' 	shift, and go to state 32
+    '-' 	shift, and go to state 33
+    '*' 	shift, and go to state 34
+    '/' 	shift, and go to state 35
+
+    $default	reduce using rule 53 (expbool)
+
+
+
+state 96
+
+    expbool  ->  expbool . AND expbool   (rule 49)
+    expbool  ->  expbool AND expbool .   (rule 49)
+    expbool  ->  expbool . OR expbool   (rule 50)
+
+
+    $default	reduce using rule 49 (expbool)
+
+
+
+state 97
+
+    expbool  ->  expbool . AND expbool   (rule 49)
+    expbool  ->  expbool . OR expbool   (rule 50)
+    expbool  ->  expbool OR expbool .   (rule 50)
+
+    AND 	shift, and go to state 78
+
+    $default	reduce using rule 50 (expbool)
+
+
+
+state 98
+
+    enunciado  ->  IF '(' expbool ')' THEN . acoes fiminstcontrole   (rule 41)
+
+    IDF 	shift, and go to state 59
+    IF  	shift, and go to state 2
+    WHILE	shift, and go to state 3
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    PRINTF	shift, and go to state 6
+    '(' 	shift, and go to state 7
+
+    acoes	go to state 106
+    comando	go to state 12
+    lvalue	go to state 13
+    rvalue	go to state 14
+    expr	go to state 15
+    chamaproc	go to state 16
+    enunciado	go to state 17
+
+
+
+state 99
+
+    enunciado  ->  WHILE '(' expbool ')' '{' . acoes '}'   (rule 42)
+
+    IDF 	shift, and go to state 59
+    IF  	shift, and go to state 2
+    WHILE	shift, and go to state 3
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    PRINTF	shift, and go to state 6
+    '(' 	shift, and go to state 7
+
+    acoes	go to state 107
+    comando	go to state 12
+    lvalue	go to state 13
+    rvalue	go to state 14
+    expr	go to state 15
+    chamaproc	go to state 16
+    enunciado	go to state 17
+
+
+
+state 100
+
+    rvalue  ->  IDF '[' listaexpr ']' .   (rule 27)
+
+    $default	reduce using rule 27 (rvalue)
+
+
+
+state 101
+
+    listadupla  ->  INT_LIT . ':' INT_LIT   (rule 18)
+    listadupla  ->  INT_LIT . ':' INT_LIT ',' listadupla   (rule 19)
+
+    ':' 	shift, and go to state 108
+
+
+
+state 102
+
+    tipolista  ->  INT '[' listadupla . ']'   (rule 14)
+
+    ']' 	shift, and go to state 109
+
+
+
+state 103
+
+    tipolista  ->  DOUBLE '[' listadupla . ']'   (rule 15)
+
+    ']' 	shift, and go to state 110
+
+
+
+state 104
+
+    tipolista  ->  REAL '[' listadupla . ']'   (rule 16)
+
+    ']' 	shift, and go to state 111
+
+
+
+state 105
+
+    tipolista  ->  CHAR '[' listadupla . ']'   (rule 17)
+
+    ']' 	shift, and go to state 112
+
+
+
+state 106
+
+    enunciado  ->  IF '(' expbool ')' THEN acoes . fiminstcontrole   (rule 41)
+
+    ELSE	shift, and go to state 113
+    END 	shift, and go to state 114
+
+    fiminstcontrole	go to state 115
+
+
+
+state 107
+
+    enunciado  ->  WHILE '(' expbool ')' '{' acoes . '}'   (rule 42)
+
+    '}' 	shift, and go to state 116
+
+
+
+state 108
+
+    listadupla  ->  INT_LIT ':' . INT_LIT   (rule 18)
+    listadupla  ->  INT_LIT ':' . INT_LIT ',' listadupla   (rule 19)
+
+    INT_LIT	shift, and go to state 117
+
+
+
+state 109
+
+    tipolista  ->  INT '[' listadupla ']' .   (rule 14)
+
+    $default	reduce using rule 14 (tipolista)
+
+
+
+state 110
+
+    tipolista  ->  DOUBLE '[' listadupla ']' .   (rule 15)
+
+    $default	reduce using rule 15 (tipolista)
+
+
+
+state 111
+
+    tipolista  ->  REAL '[' listadupla ']' .   (rule 16)
+
+    $default	reduce using rule 16 (tipolista)
+
+
+
+state 112
+
+    tipolista  ->  CHAR '[' listadupla ']' .   (rule 17)
+
+    $default	reduce using rule 17 (tipolista)
+
+
+
+state 113
+
+    fiminstcontrole  ->  ELSE . acoes END   (rule 45)
+
+    IDF 	shift, and go to state 59
+    IF  	shift, and go to state 2
+    WHILE	shift, and go to state 3
+    INT_LIT	shift, and go to state 4
+    F_LIT	shift, and go to state 5
+    PRINTF	shift, and go to state 6
+    '(' 	shift, and go to state 7
+
+    acoes	go to state 118
+    comando	go to state 12
+    lvalue	go to state 13
+    rvalue	go to state 14
+    expr	go to state 15
+    chamaproc	go to state 16
+    enunciado	go to state 17
+
+
+
+state 114
+
+    fiminstcontrole  ->  END .   (rule 44)
+
+    $default	reduce using rule 44 (fiminstcontrole)
+
+
+
+state 115
+
+    enunciado  ->  IF '(' expbool ')' THEN acoes fiminstcontrole .   (rule 41)
+
+    $default	reduce using rule 41 (enunciado)
+
+
+
+state 116
+
+    enunciado  ->  WHILE '(' expbool ')' '{' acoes '}' .   (rule 42)
+
+    $default	reduce using rule 42 (enunciado)
+
+
+
+state 117
+
+    listadupla  ->  INT_LIT ':' INT_LIT .   (rule 18)
+    listadupla  ->  INT_LIT ':' INT_LIT . ',' listadupla   (rule 19)
+
+    ',' 	shift, and go to state 119
+
+    $default	reduce using rule 18 (listadupla)
+
+
+
+state 118
+
+    fiminstcontrole  ->  ELSE acoes . END   (rule 45)
+
+    END 	shift, and go to state 120
+
+
+
+state 119
+
+    listadupla  ->  INT_LIT ':' INT_LIT ',' . listadupla   (rule 19)
+
+    INT_LIT	shift, and go to state 101
+
+    listadupla	go to state 121
+
+
+
+state 120
+
+    fiminstcontrole  ->  ELSE acoes END .   (rule 45)
+
+    $default	reduce using rule 45 (fiminstcontrole)
+
+
+
+state 121
+
+    listadupla  ->  INT_LIT ':' INT_LIT ',' listadupla .   (rule 19)
+
+    $default	reduce using rule 19 (listadupla)
+
+
+
+state 122
+
+    $   	go to state 123
+
+
+
+state 123
+
+    $   	go to state 124
+
+
+
+state 124
+
+    $default	accept

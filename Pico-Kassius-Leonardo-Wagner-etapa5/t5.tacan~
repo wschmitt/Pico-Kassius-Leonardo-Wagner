@@ -1,0 +1,9 @@
+tmp0 := 5 ADD 5
+x := tmp0  
+GOTO label0
+GOTO label1
+label0
+GOTO label2
+label1
+GOTO label4
+PRINT x

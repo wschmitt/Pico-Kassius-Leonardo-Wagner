@@ -1,0 +1,8 @@
+y : real;
+x : int;
+x = x + 5;
+y = x + 32;
+y = 3 + 4 + x;
+print(y);
+
+

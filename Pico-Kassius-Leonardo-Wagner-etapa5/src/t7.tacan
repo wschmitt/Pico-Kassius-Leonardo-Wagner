@@ -1,0 +1,11 @@
+x := 3  
+y := 4  
+IF 000(SP) < 004(SP) GOTO LABEL0
+GOTO LABEL1
+LABEL0:
+tmp0 := x ADD y
+x := tmp0  
+GOTO LABEL2
+LABEL1:
+LABEL2:
+PRINT x

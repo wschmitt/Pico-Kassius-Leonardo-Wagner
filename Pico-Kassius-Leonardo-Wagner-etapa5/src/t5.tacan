@@ -1,0 +1,16 @@
+y := 3  
+GOTO label3
+label6:
+GOTO label5
+label5:
+GOTO label1
+label3:
+GOTO label9
+label9:
+GOTO label1
+label0:
+y := 5  
+GOTO label2
+label1:
+label2:
+PRINT x

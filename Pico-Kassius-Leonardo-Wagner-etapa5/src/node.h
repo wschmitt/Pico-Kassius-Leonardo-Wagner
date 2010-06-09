@@ -14,7 +14,7 @@ typedef int Node_type;
 #define program_node   299
 #define idf_node       300
 #define int_node       301
-#define float_node     302
+#define real_node     302
 #define str_node       303
 #define empty_node     304
 #define proc_node      305
@@ -49,6 +49,7 @@ typedef int Node_type;
 #define double_node    334
 #define true_node      335
 #define false_node     336
+#define parent_node    337
 
 /** Estrutura de dados parcial para o no da arvore.
  *  Trata-se de uma arvore generalizada: qualquer no pode ter de 0 ateh
@@ -132,5 +133,8 @@ int deep_free_node(Node* n) ;
  */
 int height(Node *n) ;
 
+/** prints the tree on the screen
+ */
+void print_tree(Node* n);
 
 #endif

@@ -1,0 +1,12 @@
+y	:= 5  
+tmp0	:= 9 ADD 4
+tmp1	:= y DIV 2
+tmp2	:= tmp0 ADD tmp1
+x	:= tmp2  
+tmp3	:= x ADD y
+x	:= tmp3  
+tmp4	:= 4 ADD 9
+tmp5	:= 8 ADD array2
+tmp6	:= k ADD 1
+z	:= tmp6  
+tmp7	:= z ADD x

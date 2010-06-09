@@ -1,0 +1,120 @@
+expbool: TRUE { 	Node* n = create_leaf(lineno, true_node, $1, NULL); 
+			struct node_tac *inst = NULL;
+			char* tmp = createTmp();
+			append_inst_tac(&inst, create_inst_tac(tmp, $1->lexeme, "", "1"));
+			cat_tac(&l_inst, &inst);		       	
+			$$ = n;
+			}
+       | FALSE { 	Node* n = create_leaf(lineno, false_node, $1, NULL);
+			struct node_tac *inst = NULL;
+			char* tmp = createTmp();
+			append_inst_tac(&inst, create_inst_tac(tmp, $1->lexeme, "", "0"));
+			cat_tac(&l_inst, &inst);
+		       	$$ = n;}
+       | '(' expbool ')' { $$ = $2;}
+       | expbool AND expbool
+		{ Node** children;
+		  Node* pf1 = $1; 
+		  Node* pf3 = $3;
+		  pack_nodes(&children, 0, pf1);
+		  pack_nodes(&children, 1, pf3);
+		  struct node_tac *inst = NULL;
+		  char* tmp = createTmp();
+		  append_inst_tac(&inst, create_inst_tac(tmp, $1->lexeme, "AND", $3->lexeme));
+		  cat_tac(&l_inst, &inst);
+		  $$ = create_node(lineno, cond_node, "expbool", NULL, 2, children);
+		  /*printf("expbool %s , %s, %d \n", $1->lexeme, $3->lexeme, lineno);*/
+		}
+       | expbool OR expbool
+		{ Node** children;
+		  Node* pf1 = $1; 
+		  Node* pf3 = $3;	  
+		  pack_nodes(&children, 0, pf1);
+		  pack_nodes(&children, 1, pf3);
+		  struct node_tac *inst = NULL;
+		  char* tmp = createTmp();
+		  append_inst_tac(&inst, create_inst_tac(tmp, $1->lexeme, "AND", $3->lexeme));
+		  cat_tac(&l_inst, &inst);
+		  $$ = create_node(lineno, cond_node, "expbool", NULL, 2, children);
+		  /*printf("expbool %s , %s, %d \n", $1->lexeme, $3->lexeme, lineno);*/
+		}
+       | NOT expbool
+		{ Node** children; 
+		  Node* pf1 = create_leaf(lineno, not_node, $1, NULL);
+		  Node* pf2 = $2;
+		  pack_nodes(&children, 0, pf1);
+		  pack_nodes(&children, 1, pf2);
+		  struct node_tac *inst = NULL;
+		  char* tmp = createTmp();
+		  append_inst_tac(&inst, create_inst_tac(tmp, "", "NOT", $2->lexeme));
+		  cat_tac(&l_inst, &inst);
+		  $$ = create_node(lineno, cond_node, "expbool", NULL, 2, children);
+		  /*printf("expbool %s , %s, %d \n", $1, $2->lexeme, lineno);*/
+		}
+       | expr '>' expr
+		{ Node** children;
+		  Node* pf1 = $1; 
+		  Node* pf3 = $3;
+		  pack_nodes(&children, 0, pf1);
+		  pack_nodes(&children, 1, pf3);
+		  char* tmp = createTmp();
+		  char* op = calloc(200,sizeof(char));
+		  sprintf(op,"%s > %s", $1->lexeme, $3->lexeme);
+		  char* proximo_estado = calloc(200, sizeof(char));
+		  sprintf(op, "_%03d", proximo_estado);
+		  append_inst_tac(&inst, create_inst_tac("IF", op, "GOTO", (proximo_estado+3)));
+		  append_inst_tac(&inst, create_inst_tac(tmp, "0", "", ""));
+		  append_inst_tac(&inst, create_inst_tac("GOTO", "(proximo_estado+2)", "", ""));
+		  append_inst_tac(&inst, create_inst_tac(tmp, "1", "", ""));
+		  cat_tac(&l_inst, &inst);
+		  /*IF 15 > 10 GOTO _003*/
+
+		  $$ = create_node(lineno, cond_node, "expbool", NULL, 2, children);
+		  /*printf("expbool %s , %s, %d \n", $1->lexeme, $3->lexeme, lineno);*/
+		}
+       | expr '<' expr
+		{ Node** children;
+		  Node* pf1 = $1; 
+		  Node* pf3 = $3;
+		  pack_nodes(&children, 0, pf1);
+		  pack_nodes(&children, 1, pf3);
+		  $$ = create_node(lineno, cond_node, "expbool", NULL, 2, children);
+		  /*printf("expbool %s , %s, %d \n", $1->lexeme, $3->lexeme, lineno);*/
+		}
+       | expr LE expr
+		{ Node** children;
+		  Node* pf1 = $1; 
+		  Node* pf3 = $3;
+		  pack_nodes(&children, 0, pf1);
+		  pack_nodes(&children, 1, pf3);
+		  $$ = create_node(lineno, cond_node, "expbool", NULL, 2, children);
+		  /*printf("expbool %s , %s, %d \n", $1->lexeme, $3->lexeme, lineno);*/
+		}
+       | expr GE expr
+		{ Node** children;
+		  Node* pf1 = $1; 
+		  Node* pf3 = $3;
+		  pack_nodes(&children, 0, pf1);
+		  pack_nodes(&children, 1, pf3);
+		  $$ = create_node(lineno, cond_node, "expbool", NULL, 2, children);
+		  /*printf("expbool %s , %s, %d \n", $1->lexeme, $3->lexeme, lineno);*/
+		}
+       | expr EQ expr
+		{ Node** children;
+		  Node* pf1 = $1; 
+		  Node* pf3 = $3;
+		  pack_nodes(&children, 0, pf1);
+		  pack_nodes(&children, 1, pf3);
+		  $$ = create_node(lineno, cond_node, "expbool", NULL, 2, children);
+		  /*printf("expbool %s , %s, %d \n", $1->lexeme, $3->lexeme, lineno);*/
+		}
+       | expr NE expr
+		{ Node** children;
+		  Node* pf1 = $1; 
+		  Node* pf3 = $3;
+		  pack_nodes(&children, 0, pf1);
+		  pack_nodes(&children, 1, pf3);
+		  $$ = create_node(lineno, cond_node, "expbool", NULL, 2, children);
+		  /*printf("expbool %s , %s, %d \n", $1->lexeme, $3->lexeme, lineno);*/
+		}
+       ;

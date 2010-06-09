@@ -1,0 +1,14 @@
+tmp1 := 1 SUB 0
+tmp0 := tmp1 MUL 0
+tmp2 := 2 SUB 0
+tmp3 := tmp2 MUL 3
+tmp0 := tmp0 ADD tmp3
+tmp4 := 2 SUB 0
+tmp0 := tmp0 ADD tmp4
+tmp6 := 1 SUB 0
+tmp5 := tmp6 MUL 19
+tmp7 := 2 SUB 0
+tmp5 := tmp5 ADD tmp7
+tmp8 := x(tmp5)
+tmp0(a) := tmp8
+PRINT z

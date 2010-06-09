@@ -1,0 +1,8 @@
+z : int;
+x : int;
+A : int[0:10];
+
+z = A[8];
+z = z + x + 5;
+print(z);
+

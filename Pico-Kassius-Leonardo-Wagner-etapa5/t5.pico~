@@ -1,0 +1,5 @@
+x : int[0:10];
+y: int;
+y = 3;
+if (!(true | false)) then y = 5; end;
+print(x);
